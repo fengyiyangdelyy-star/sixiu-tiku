@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme:dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="思修题库">
+<title>思想道德修养与法律基础 · 题库</title>
+<style>
+:root{
+  --bg:#f2f2f7; --card:#fff; --text:#000; --text2:#3c3c43; --muted:#8e8e93;
+  --line:rgba(60,60,67,.14); --fill:rgba(118,118,128,.10); --fill2:rgba(118,118,128,.16);
+  --accent:#007aff; --accent-soft:rgba(0,122,255,.12);
+  --ok:#34c759; --ok-bg:rgba(52,199,89,.14);
+  --bad:#ff3b30; --bad-bg:rgba(255,59,48,.12);
+  --gold:#ff9500; --gold-bg:rgba(255,149,0,.14);
+  --header:rgba(242,242,247,.82); --seg:rgba(118,118,128,.12); --seg-on:#fff;
+  --radius:16px; --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#000; --card:#1c1c1e; --text:#fff; --text2:#ebebf5; --muted:#98989f;
+  --line:rgba(255,255,255,.14); --fill:rgba(118,118,128,.24); --fill2:rgba(118,118,128,.34);
+  --accent:#0a84ff; --accent-soft:rgba(10,132,255,.22);
+  --ok:#30d158; --ok-bg:rgba(48,209,88,.18);
+  --bad:#ff453a; --bad-bg:rgba(255,69,58,.16);
+  --gold:#ffd60a; --gold-bg:rgba(255,214,10,.16);
+  --header:rgba(0,0,0,.78); --seg:rgba(118,118,128,.24); --seg-on:#636366;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 6px 20px rgba(0,0,0,.4);
+}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{
+  background:var(--bg); color:var(--text);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 96px}
+header{
+  position:sticky;top:0;z-index:20;background:var(--header);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+  margin:0 -16px;padding:calc(8px + env(safe-area-inset-top)) 16px 10px;
+}
+.bar{display:flex;align-items:center;gap:8px;min-width:0}
+.brand{font-weight:700;font-size:17px;letter-spacing:-.3px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{font-size:12px;font-weight:590;color:var(--muted);background:var(--fill);border-radius:999px;padding:4px 11px;white-space:nowrap;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.fav{background:none;border:0;font-size:21px;cursor:pointer;padding:0 2px;color:var(--fill2);line-height:1;flex:0 0 auto;transition:transform .15s,color .15s}
+.fav:active{transform:scale(.88)}
+.fav.on{color:var(--gold)}
+.back{background:none;border:0;color:var(--accent);font:inherit;font-size:16px;font-weight:500;cursor:pointer;padding:0 2px;flex:0 0 auto}
+.sub{margin-top:8px;font-size:12.5px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;color:var(--text)}
+.timer.warn{color:var(--bad)}
+.progress{height:4px;background:var(--fill2);border-radius:999px;overflow:hidden;margin-top:10px}
+.progress>i{display:block;height:100%;background:var(--accent);width:0;border-radius:999px;transition:width .3s cubic-bezier(.25,.1,.25,1)}
+.tabs{display:flex;gap:2px;margin-top:10px;background:var(--seg);border-radius:11px;padding:3px}
+.tabs button{flex:1;min-width:0;border:0;background:transparent;color:var(--text);font-size:13px;font-weight:590;padding:7px 2px;border-radius:9px;cursor:pointer;font-family:inherit;transition:background .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabs button.on{background:var(--seg-on);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+.filters{display:flex;gap:8px;margin-top:10px}
+.filters select{
+  flex:1;min-width:0;font:inherit;font-size:14px;color:var(--text);background:var(--card);
+  border:0;border-radius:11px;padding:9px 30px 9px 12px;appearance:none;box-shadow:var(--shadow);
+  text-overflow:ellipsis;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-top:14px}
+.meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tag{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag.g{background:var(--fill);color:var(--muted)}
+.stem{font-size:18px;line-height:1.72;font-weight:600;letter-spacing:-.2px;margin:0 0 16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{
+  display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+  background:var(--fill);border:1.5px solid transparent;border-radius:13px;
+  padding:13px 14px;font:inherit;font-size:16px;color:var(--text);cursor:pointer;transition:.16s;
+}
+.opt:active{transform:scale(.985)}
+.opt .key{flex:0 0 25px;height:25px;border-radius:8px;background:var(--fill2);color:var(--muted);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.opt .txt{flex:1;min-width:0;white-space:pre-wrap;line-height:1.62;overflow-wrap:anywhere}
+.opt.sel{background:var(--accent-soft);border-color:var(--accent)}
+.opt.sel .key{background:var(--accent);color:#fff}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok)}
+.opt.ok .key{background:var(--ok);color:#fff}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}
+.opt.bad .key{background:var(--bad);color:#fff}
+.opt[disabled]{cursor:default}
+.opt.pick{background:var(--accent-soft);border-color:var(--accent)}
+input.fill{width:100%;font:inherit;color:var(--text);background:var(--fill);border:1.5px solid transparent;border-radius:12px;padding:13px 14px;outline:none}
+input.fill:focus{background:var(--card);border-color:var(--accent)}
+.btns{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:600;font-size:15px;border-radius:12px;padding:11px 20px;border:0;background:var(--fill);color:var(--text);cursor:pointer;transition:.16s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.danger{background:var(--bad-bg);color:var(--bad)}
+.btn.sm{font-size:13.5px;padding:8px 14px;border-radius:10px}
+.btn.wide{width:100%;justify-content:center;padding:14px}
+.btn[disabled]{opacity:.38;cursor:default}
+.fb{margin-top:16px;border-radius:14px;padding:15px}
+.fb.right{background:var(--ok-bg)}
+.fb.wrong{background:var(--bad-bg)}
+.fb.peek{background:var(--accent-soft)}
+.fb .res{font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:8px;font-size:15.5px}
+.fb.right .res{color:var(--ok)}
+.fb.wrong .res{color:var(--bad)}
+.fb.peek .res{color:var(--accent)}
+.fb .ans{font-size:15.5px;margin-bottom:9px;line-height:1.7;overflow-wrap:anywhere}
+.fb .ans b{font-weight:700}
+.fb.right .ans b{color:var(--ok)}
+.fb.wrong .ans b{color:var(--bad)}
+.fb .exp{font-size:15px;line-height:1.8;white-space:pre-wrap;color:var(--text2);overflow-wrap:anywhere}
+.fb .exp .lab{display:block;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.6px;margin-bottom:5px}
+.row{display:flex;align-items:center;gap:9px;margin-top:16px;flex-wrap:wrap}
+.row .spacer{flex:1;min-width:6px}
+.hint{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+.empty{text-align:center;color:var(--muted);padding:56px 16px;font-size:15px;line-height:2}
+.list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.item{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.item:active{transform:scale(.99)}
+.item .no{flex:0 0 26px;height:26px;border-radius:8px;background:var(--bad-bg);color:var(--bad);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.item .no.g{background:var(--gold-bg);color:var(--gold)}
+.item .no.n{background:var(--fill);color:var(--muted)}
+.item .q{flex:1;min-width:0;font-size:15px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.rowline{display:flex;align-items:center;gap:10px;padding:14px;background:var(--card);border-radius:14px;box-shadow:var(--shadow);margin-top:10px;cursor:pointer}
+.rowline .t{flex:1;min-width:0;font-size:15.5px}
+.rowline .v{color:var(--muted);font-size:14.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chev{color:var(--fill2);font-size:17px;flex:0 0 auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;margin-top:14px}
+.stat{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:16px 10px;text-align:center}
+.stat .n{font-size:26px;font-weight:800;color:var(--accent);line-height:1.2;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+h3{font-size:13px;margin:26px 0 0 4px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);table-layout:fixed}
+th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;overflow-wrap:anywhere}
+th{color:var(--muted);font-size:12px;font-weight:600}
+tr:last-child td{border-bottom:0}
+th:first-child,td:first-child{width:auto}
+th.n,td.n{text-align:right;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums;width:74px}
+.switch{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--text);margin-top:10px;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px;cursor:pointer}
+.switch input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto}
+.switch span{flex:1;min-width:0}
+.field{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px;margin-top:10px}
+.field .lab{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:0;font:inherit;font-size:14px;font-weight:560;padding:8px 14px;border-radius:999px;background:var(--fill);color:var(--text);cursor:pointer}
+.chip.on{background:var(--accent);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px;margin-top:10px}
+.grid button{aspect-ratio:1;border:0;border-radius:10px;background:var(--fill);color:var(--text);font:inherit;font-size:14px;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums}
+.grid button.done{background:var(--accent-soft);color:var(--accent)}
+.grid button.cur{outline:2px solid var(--accent);outline-offset:-2px}
+.grid button.ok{background:var(--ok-bg);color:var(--ok)}
+.grid button.no{background:var(--bad-bg);color:var(--bad)}
+.flash{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:22px 18px;margin-top:14px;min-height:270px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;transition:.2s}
+.flash:active{transform:scale(.99)}
+.flash .d{font-size:12.5px;font-weight:700;color:var(--accent);letter-spacing:.3px;margin-bottom:8px}
+.flash .ti{font-size:20px;font-weight:700;line-height:1.5;letter-spacing:-.3px;overflow-wrap:anywhere}
+.flash .bd{font-size:15.5px;line-height:1.85;color:var(--text2);margin-top:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.flash .tap{font-size:12.5px;color:var(--muted);margin-top:16px;text-align:center}
+.big{font-size:44px;font-weight:800;letter-spacing:-1px;text-align:center;line-height:1.1;font-variant-numeric:tabular-nums}
+.bigS{text-align:center;color:var(--muted);font-size:14px;margin-top:6px}
+.lrow{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.lrow .sp{flex:1}
+@media(max-width:420px){
+  .wrap{padding-left:12px;padding-right:12px}
+  header{margin:0 -12px;padding-left:12px;padding-right:12px}
+  .card{padding:15px}
+  .stem{font-size:17px}
+  .opt{font-size:15.5px;padding:12px 13px;gap:10px}
+  .brand{font-size:16px}
+  .flash .ti{font-size:18.5px}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <button class="back" id="backBtn" style="display:none">‹ 返回</button>
+      <div class="brand" id="title">思想道德修养与法律基础</div>
+      <div class="pill" id="counter">0 / 0</div>
+      <button class="fav" id="favBtn" title="收藏本题">★</button>
+    </div>
+    <div class="sub" id="sub"></div>
+    <div class="progress"><i id="pbar"></i></div>
+    <div class="tabs" id="tabs">
+      <button data-v="quiz" class="on">刷题</button>
+      <button data-v="exam">考试</button>
+      <button data-v="cards">时政</button>
+      <button data-v="data">我的</button>
+    </div>
+    <div class="filters" id="filters">
+      <select id="chapterSel"></select>
+      <select id="scopeSel">
+        <option value="all">全部题目</option>
+        <option value="undone">只做没做过的</option>
+        <option value="wrong">只做错题</option>
+        <option value="fav">只做收藏</option>
+      </select>
+    </div>
+  </header>
+  <main id="main"></main>
+</div>
+<script>
+const QUESTIONS = [{"id": "c1-s1", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "理想的本质特征是( )。", "o": ["脱离现实的幻想", "在实践中形成的、具有实现可能的未来目标", "纯粹主观的想象", "对过去的回忆重构"], "a": 1, "e": "理想是人们在实践中形成的、具有实现可能的对未来的向往和追求，本质上是“在实践中形成的、具有实现可能的未来目标”。"}, {"id": "c1-s2", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "青年时期在理想信念形成中的定位是( )。", "o": ["人生理想信念确立最零散的时期", "理想信念确立最集中、最突出的时期", "理想信念趋于稳定的时期", "理想信念调整修正的时期"], "a": 1, "e": "青年时期是人生理想信念确立最集中、最突出的时期，此时价值观尚未定型，最需要引导。"}, {"id": "c1-s3", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "下列不属于职业理想内涵的是( )。", "o": ["未来职业领域的选择意向", "工作环境的期待向往", "职业成就的目标设定", "社会地位的阶层跨越"], "a": 3, "e": "职业理想包括对未来职业领域的选择意向、对工作环境和职业成就的期待等；“社会地位的阶层跨越”不属于职业理想的内涵。"}, {"id": "c1-s4", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "信念稳定性特征的核心依据是( )。", "o": ["基于情感认同的短期心理状态", "经过理智认同和情感支持的持久坚信", "随环境变化的灵活调整", "对权威思想的盲目接受"], "a": 1, "e": "信念的稳定性来自理智认同与情感支持的统一，是持久而坚定的确信，不是短期情绪，也不是对权威的盲目服从。"}, {"id": "c1-s5", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "信念是由哪些成分有机融合而成的统一体或“合金”?( )", "o": ["认识、情感与理想", "认识、态度与意志", "认识、情感与意志", "认知、态度与实践"], "a": 2, "e": "信念是认识、情感和意志三者有机融合的统一体，教材称为“合金”。"}, {"id": "c1-s6", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "马克思主义最鲜明的政治立场是( )。", "o": ["阶级斗争至上的理论立场", "人民至上的价值立场", "理论创新至上的发展立场", "政党利益至上的实践立场"], "a": 1, "e": "人民至上是马克思主义最鲜明的政治立场，马克思主义是为人民求解放、谋幸福的理论。"}, {"id": "c1-s7", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "马克思主义革命性特征的集中体现是( )。", "o": ["彻底的批判精神与鲜明的无产阶级立场", "对历史传统的全盘否定", "理论体系的封闭性建构", "脱离实践的抽象理论推演"], "a": 0, "e": "马克思主义的革命性集中体现为彻底的批判精神和鲜明的无产阶级立场。"}, {"id": "c1-s8", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "马克思主义发展性特征的本质要求是( )。", "o": ["理论体系的绝对固化", "随时代、实践和科学发展不断更新", "对其他思想成果的排斥拒绝", "仅适用于特定历史阶段的局限性"], "a": 1, "e": "马克思主义具有与时俱进的理论品质，随着时代、实践和科学的发展而不断更新。"}, {"id": "c1-s9", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "新时代我国社会的主要矛盾是( )。", "o": ["阶级矛盾与阶层矛盾交织", "人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾", "城乡发展差距的持续存在", "区域经济发展的不平衡问题"], "a": 1, "e": "新时代我国社会主要矛盾已转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。"}, {"id": "c1-s10", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "中国精神的核心构成是( )。", "o": ["以爱国主义为核心的民族精神和以改革创新为核心的时代精神", "集体主义精神与传统保守思想的结合", "个人奋斗精神与自由主义理念的融合", "传统文化精神与现代功利思想的冲突"], "a": 0, "e": "中国精神就是以爱国主义为核心的民族精神和以改革创新为核心的时代精神。"}, {"id": "c1-s11", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "中国梦的本质内涵是( )。", "o": ["国家富强、民族振兴、人民幸福", "经济腾飞与科技领先的双重目标", "文化繁荣与社会和谐的发展愿景", "军事强国与国际主导的战略追求"], "a": 0, "e": "中国梦的本质内涵是国家富强、民族振兴、人民幸福。"}, {"id": "c1-s12", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "实现中国梦的必由之路是( )。", "o": ["中国特色社会主义道路", "西方资本主义发展道路", "传统计划经济发展道路", "空想社会主义理论道路"], "a": 0, "e": "实现中国梦必须走中国道路，即中国特色社会主义道路。"}, {"id": "c1-s13", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "“五位一体”总体布局中经济建设的定位是( )。", "o": ["根本", "保证", "灵魂", "基础"], "a": 0, "e": "“五位一体”总体布局中：经济建设是根本，政治建设是保证，文化建设是灵魂，社会建设是条件，生态文明建设是基础。"}, {"id": "c1-s14", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "“四个全面”战略布局的引领性目标是( )。", "o": ["全面建设社会主义现代化国家", "全面深化改革", "全面依法治国", "全面从严治党"], "a": 0, "e": "“四个全面”战略布局中，全面建设社会主义现代化国家是引领性目标。"}, {"id": "c1-s15", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "新发展理念中引领发展的第一动力是( )。", "o": ["协调", "创新", "绿色", "共享"], "a": 1, "e": "新发展理念中，创新是引领发展的第一动力。"}, {"id": "c1-s16", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "“五位一体”总体布局中政治建设的定位是( )。", "o": ["根 本", "保证", "灵魂", "条件"], "a": 1, "e": "“五位一体”中政治建设的定位是保证。"}, {"id": "c1-s17", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "“五位一体”总体布局中社会建设的定位是( )。", "o": ["基础", "条件", "灵魂", "保证"], "a": 1, "e": "“五位一体”中社会建设的定位是条件。"}, {"id": "c1-s18", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "“五位一体”总体布局中生态文明建设的定位是( )。", "o": ["根本", "保证", "基础", "灵魂"], "a": 2, "e": "“五位一体”中生态文明建设的定位是基础。"}, {"id": "c1-s19", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "全面依法治国的总目标是( )。", "o": ["建设高效法治政府", "建设中国特色社会主义法治体系，建设社会主义法治国家", "完善中国特色社会主义法律体系", "提升司法公信力"], "a": 1, "e": "全面依法治国的总目标是建设中国特色社会主义法治体系、建设社会主义法治国家。"}, {"id": "c1-s20", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "新发展理念中解决发展不平衡问题的是( )。", "o": ["创新", "协调", "绿色", "共享"], "a": 1, "e": "协调发展解决的是发展不平衡问题。"}, {"id": "c1-s21", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "新发展理念中解决人与自然和谐共生问题的是( )。", "o": ["绿色", "开放", "共享", "协调"], "a": 0, "e": "绿色发展解决的是人与自然和谐共生问题。"}, {"id": "c1-s22", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "新发展理念中解决发展内外联动问题的是( )。", "o": ["开放", "创新", "协调", "共 享"], "a": 0, "e": "开放发展解决的是发展内外联动问题。"}, {"id": "c1-s23", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "道路自信的核心内涵是( )。", "o": ["对中国特色社会主义道路的坚定认同", "对西方发展模式的批判性借鉴", "对传统发展道路的固守坚持", "对经济增长速度的片面追求"], "a": 0, "e": "道路自信就是对中国特色社会主义道路的坚定认同。"}, {"id": "c1-s24", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "理论自信的核心对象是( )。", "o": ["马克思主义理论尤其是中国特色社会主义理论体系", "西方自由主义理论体系", "空想社会主义理论成果", "中国传统文化理论体系"], "a": 0, "e": "理论自信的核心对象是马克思主义理论特别是中国特色社会主义理论体系。"}, {"id": "c1-s25", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "single", "s": "青年确立理想信念时应避免的误区是( )。", "o": ["将崇高理想与坚定信念相结合", "把个人理想与社会理想相割裂", "对不同理想信念进行辨别选择", "结合国家发展现实确立目标"], "a": 1, "e": "把个人理想与社会理想割裂开来是青年确立理想信念时应避免的误区，二者应当有机统一。"}, {"id": "c1-m1", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "理想的特征包括( )。", "o": ["永恒性", "超越性", "时代性", "实践性"], "a": [1, 2, 3], "e": "理想具有超越性、时代性和实践性，但不具有“永恒性”。"}, {"id": "c1-m2", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "信念的构成要素包括( )。", "o": ["认 识", "情感", "意志", "想象"], "a": [0, 1, 2], "e": "信念由认识、情感和意志三个要素融合而成，不包括“想象”。"}, {"id": "c1-m3", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "马克思主义的鲜明特征包括( )。", "o": ["科学性", "革 命 性", "实践性", "人民性与发展性"], "a": [0, 1, 2, 3], "e": "马克思主义具有科学性、革命性、实践性、人民性和发展性等鲜明特征。"}, {"id": "c1-m4", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "树立中国特色社会主义共同理想信念的要求包括( )。", "o": ["坚定对中国共产党的信任", "坚定走中国特色社会主义道路的信念", "坚定个人利益至上的理念", "坚定实现中华民族伟大复兴的中国梦的信心"], "a": [0, 1, 3], "e": "树立中国特色社会主义共同理想，要坚定对党的信任、坚定走中国特色社会主义道路的信念、坚定实现中国梦的信心；C 项“个人利益至上”错误。"}, {"id": "c1-m5", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "实现中国梦的基本要求包括( )。", "o": ["走中国特色社会主义道路", "弘扬中国精神", "凝聚中国力量", "依赖外部支持"], "a": [0, 1, 2], "e": "实现中国梦的基本要求是走中国道路、弘扬中国精神、凝聚中国力量，不能依赖外部支持。"}, {"id": "c1-m6", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "“五位一体”中各项建设定位正确的有( )。", "o": ["经济建设是根本", "政治建设是保证", "文化建设是灵魂", "生态文明建设是基础"], "a": [0, 1, 2, 3], "e": "经济建设是根本、政治建设是保证、文化建设是灵魂、生态文明建设是基础，四项定位均正确。"}, {"id": "c1-m7", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "新发展理念解决的问题包括( )。", "o": ["创新解决发展动力问题", "协调解决发展不平衡问题", "绿色解决人与自然和谐共生问题", "共享解决社会公平正义问题"], "a": [0, 1, 2, 3], "e": "创新解决发展动力问题，协调解决发展不平衡问题，绿色解决人与自然和谐共生问题，共享解决社会公平正义问题。"}, {"id": "c1-m8", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "中国特色社会主义进入新时代的标志包括( )。", "o": ["历史性成就与历史性变革", "社会主要矛盾变化", "新发展理念的提出", "经济总量世界第一"], "a": [0, 1, 2], "e": "新时代的标志是取得历史性成就与历史性变革、社会主要矛盾变化等；“经济总量世界第一”不符合实际。"}, {"id": "c1-m9", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "青年确立理想信念时正确的做法有( )。", "o": ["盲目追随他人信念", "个人理想与社会理想结合", "学会辨别和选择不同理想信念", "崇高理想与坚定信念结合"], "a": [1, 2, 3], "e": "青年应把个人理想与社会理想相结合、学会辨别和选择不同理想信念、把崇高理想与坚定信念相结合；A 项盲目追随他人是错误的。"}, {"id": "c1-m10", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "multiple", "s": "马克思主义的实践性特征体现为( )。", "o": ["从实践中来，到实践中去", "在实践中接受检验", "随实践发展而发展", "脱离实践的理论建构"], "a": [0, 1, 2], "e": "实践性体现为从实践中来、到实践中去，在实践中接受检验并随实践发展；D 项与这一要求正好相反。"}, {"id": "c1-j1", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "理想是人们在实践中形成的、具有实现可能的未来目标。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 理想是在实践中形成的、具有实现可能的未来目标。"}, {"id": "c1-j2", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "马克思主义的革命性集中表现为彻底的批判精神和鲜明的无产阶级立场。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 马克思主义的革命性集中表现为彻底的批判精神和鲜明的无产阶级立场。"}, {"id": "c1-j3", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "实现中国梦必须走中国特色社会主义道路。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 实现中国梦必须走中国特色社会主义道路。"}, {"id": "c1-j4", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "“五位一体”总体布局中，政治建设是根本。( )", "o": ["正确", "错误"], "a": 1, "e": "× 经济建设是根本，政治建设是保证，说“政治建设是根本”错误。"}, {"id": "c1-j5", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "中国精神包括以爱国主义为核心的民族精神和以改革创新为核心的时代精神。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ 中国精神包括以爱国主义为核心的民族精神和以改革创新为核心的时代精神。"}, {"id": "c1-j6", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "道路自信是对中国特色社会主义道路的坚定认同。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 道路自信就是对中国特色社会主义道路的坚定认同。"}, {"id": "c1-j7", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "中国特色社会主义进入新时代，改变了我国仍处于社会主义初级阶段的基本国情。 ( )", "o": ["正确", "错误"], "a": 1, "e": "× 新时代我国仍处于并将长期处于社会主义初级阶段，基本国情没有变。"}, {"id": "c1-j8", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "社会政治理想是理想体系中的核心。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 社会政治理想居于理想体系的核心地位，规定和制约着其他理想。"}, {"id": "c1-j9", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "“四个全面”中具有突破性的关键环节是全面从严治党。( )", "o": ["正确", "错误"], "a": 1, "e": "× “四个全面”中具有突破性和先导性的关键环节是全面深化改革。"}, {"id": "c1-j10", "c": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "t": "judge", "s": "实现中国梦必须凝聚中国力量，即全国各族人民大团结的力量。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 中国力量就是全国各族人民大团结的力量。"}, {"id": "c2-s1", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "下列关于世界观与人生观的关系，表述错误的是( )。", "o": ["世界观决定人生观", "人生观影响世界观的变化", "世界观等同于人生观", "世界观为人生观提供指导"], "a": 2, "e": "世界观是人生观的基础，世界观决定人生观、为人生观提供指导，人生观又影响世界观；但世界观不等于人生观。"}, {"id": "c2-s2", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "下列属于积极进取的人生态度的是( )。", "o": ["悲观厌世", "投机钻营", "乐观开拓", "得过且过"], "a": 2, "e": "乐观开拓属于积极进取的人生态度；悲观厌世、投机钻营、得过且过都是消极的人生态度。"}, {"id": "c2-s3", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "评价人生价值的根本尺度是( )。", "o": ["个人财富积累", "社会贡献大小", "是否符合社会发展规律", "个人声誉高低"], "a": 2, "e": "评价人生价值的根本尺度，是看一个人的活动是否符合社会发展规律、是否满足社会发展的需要。"}, {"id": "c2-s4", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "下列不属于人生价值评价方法的是( )。", "o": ["能力大小与贡献尽力统一", "物质贡献与精神贡献统一", "个人利益与集体利益统一", "动机与效果统一"], "a": 2, "e": "人生价值评价要坚持能力大小与贡献尽力统一、物质贡献与精神贡献统一、动机与效果统一；“个人利益与集体利益统一”不是评价方法。"}, {"id": "c2-s5", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "个人与社会的关系本质上个是( )。", "o": ["利益关系", "竞争关系", "合作关系", "对立关系"], "a": 0, "e": "个人与社会的关系归根到底是物质利益关系。"}, {"id": "c2-s6", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "科学高尚的人生观是( )。", "o": ["为个人谋利的人生观", "为人民服务的人生观", "追求享乐的人生观", "功利主义人生观"], "a": 1, "e": "为人民服务的人生观是科学高尚的人生观。"}, {"id": "c2-s7", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "为人民服务的人生观建立的基础是( )。", "o": ["唯心主义基础", "历史唯物主义基础", "实用主义基础", "个人主义基础"], "a": 1, "e": "为人民服务的人生观建立在历史唯物主义“人民是历史创造者”的基础之上。"}, {"id": "c2-s8", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "实现人生价值的根本途径是( )。", "o": ["社会实践", "空想规划", "家庭支持", "学历提升"], "a": 0, "e": "社会实践是实现人生价值的根本途径。"}, {"id": "c2-s9", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "实现人生价值的主观条件是( )。", "o": ["坚强的意志品质", "优越的家庭环境", "社会地位", "物质财富"], "a": 0, "e": "实现人生价值的主观条件包括树立正确价值目标、提高自身素质、具备坚强的意志品质等。"}, {"id": "c2-s10", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "劳动在人生价值中的作用是( )。", "o": ["价值的源泉", "价值的衡量", "价值的目标", "价值的表象"], "a": 0, "e": "劳动是人生价值的源泉。"}, {"id": "c2-s11", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "青年的价值取向决定了( )。", "o": ["个人前途", "家庭命运", "未来社会价值取向", "职业选择"], "a": 2, "e": "青年的价值取向决定了未来整个社会的价值取向。"}, {"id": "c2-s12", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "下列对“人的本质”的理解正确的是( )。", "o": ["自然属性是本质属性", "社会属性是本质属性", "生理属性是本质属性", "思想属性是本质属性"], "a": 1, "e": "人的本质在于其社会属性，社会属性是人的本质属性。"}, {"id": "c2-s13", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "人生观的特点不包括( )。", "o": ["时代性", "阶级性", "永恒性", "相对的独立性"], "a": 2, "e": "人生观具有时代性、阶级性和相对独立性，不具有“永恒性”。"}, {"id": "c2-s14", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "人生目的的作用不包括( )。", "o": ["决定人生道路", "决定人生态度", "决定人生价值标准", "决定人生长度"], "a": 3, "e": "人生目的决定人生道路、决定人生态度、决定人生价值标准，但不能决定人生的长度。"}, {"id": "c2-s15", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "积极进取的人生态度对人生的作用不包括( )。", "o": ["促进人生目的达成", "阻碍人生价值实现", "调整人生道路方向", "激发奋斗动力"], "a": 1, "e": "积极进取的人生态度能够促进人生目的达成、推动人生价值实现，不会阻碍价值实现。"}, {"id": "c2-s16", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "为人民服务的人生观中，判断人生是非的标准是( )。", "o": ["个人利益是否满足", "是否为了人民的利益", "社会地位高低", "物质财富多少"], "a": 1, "e": "为人民服务的人生观以是否为了人民的利益作为判断人生是非的标准。"}, {"id": "c2-s17", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "个人与社会的关系是( )。", "o": ["绝对对立", "完全统一", "辩证统一", "毫无关联"], "a": 2, "e": "个人与社会是对立统一的辩证关系。"}, {"id": "c2-s18", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "人生自我价值的主要表现是( )。", "o": ["对社会的贡献", "对自身需要的满足", "社会对个人的尊重", "他人的认可"], "a": 1, "e": "人生自我价值主要表现为对自身需要的满足。"}, {"id": "c2-s19", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "下列不属于实现人生价值的主观条件的是( )。", "o": ["社会教育环境", "树立正确价值目标", "提高自身素质", "坚强的意志"], "a": 0, "e": "社会教育环境属于实现人生价值的客观条件，不属于主观条件。"}, {"id": "c2-s20", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "在当今中国，最重要的社会实践是( )。", "o": ["个人创业", "实现中国式现代化", "学术研究", "职业发展"], "a": 1, "e": "在当今中国，最重要的社会实践是推进中国式现代化。"}, {"id": "c2-s21", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "下列属于世界观根本观点的内容是( )。", "o": ["人生意义", "整个世界", "社会关系", "价值判断"], "a": 1, "e": "世界观是人们对整个世界的根本观点和根本看法。"}, {"id": "c2-s22", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "人生观决定一个人的( )。", "o": ["外貌形象", "做人标准", "财富多少", "寿命长短"], "a": 1, "e": "人生观决定一个人的做人标准。"}, {"id": "c2-s23", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "人生价值评价中应坚持的标准是( )。", "o": ["能力大小与贡献无关", "物质贡献优先于精神贡献", "完善自身与贡献社会统一", "动机与效果无关"], "a": 2, "e": "人生价值评价应坚持完善自身与贡献社会相统一。"}, {"id": "c2-s24", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "为人民服务中的“人民”指的是( )。", "o": ["少数人", "社会精英", "最大多数人", "部分社会成员"], "a": 2, "e": "为人民服务中的“人民”指的是最大多数人。"}, {"id": "c2-s25", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "single", "s": "实现人生价值离不开( )。", "o": ["集体的力量", "个人的空想", "他人的牺牲", "偶然的机遇"], "a": 0, "e": "实现人生价值离不开集体的力量，个人只有在集体中才能获得发展的条件。"}, {"id": "c2-m1", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "下列属于人生观基本内容的是( )。", "o": ["人生目的：对“人如何获得财富”的认知", "人生态度：在实践中形成的稳定心理倾向", "人生价值：个人对社会、他人及自身的作用意义", "人生长度：个体生命的时间跨度"], "a": [1, 2], "e": "人生观的基本内容包括人生目的、人生态度和人生价值；A 项对人生目的的表述错误，D 项不属于其内容。"}, {"id": "c2-m2", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "人生目的的作用包括( )。", "o": ["决定人生道路的方向与行动动力", "决定 一 个人的人生态度", "决定一个人容貌的美丑与身材的高矮", "决定人生价值的评判标准(如奉献或索取)"], "a": [0, 1, 3], "e": "人生目的决定人生道路、决定人生态度、决定人生价值的评判标准；C 项显然错误。"}, {"id": "c2-m3", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "积极进取的人生态度，其特征包括( )。", "o": ["否定人的主观能动性，认为命运不可改变", "以乐观心态面对挫折，勇于开拓创新", "对社会缺乏责任感，主张“各人自扫门前雪”", "主动为社会做贡献，追求崇高价值目标"], "a": [1, 3], "e": "积极进取的人生态度表现为以乐观心态面对挫折、勇于开拓创新、主动为社会做贡献；A、C 是消极态度。"}, {"id": "c2-m4", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "个人与社会的关系表现为( )。", "o": ["个人是社会的细胞，社会由个人构成", "社会发展完全制约个人，个人无法影响社会", "两者是辩证统一 的，既有依存也有矛盾", "个人利益与社会利益必然对立，无法调和"], "a": [0, 2], "e": "个人与社会相互依存、辩证统一：个人是社会的细胞，社会由个人构成，二者既有依存也有矛盾。"}, {"id": "c2-m5", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "为人民服务的人生观的科学依据包括( )。", "o": ["建立在唯心主义“英雄创造历史”的理论上", "符合历史唯物主义“人民是历史的创造者”的观点", "实现了个人与社会的有机统一", "是资产阶级为维护统治提出的价值观"], "a": [1, 2], "e": "为人民服务的人生观以历史唯物主义“人民是历史的创造者”为理论依据，实现了个人与社会的有机统一。"}, {"id": "c2-m6", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "实现人生价值的客观条件包括( )。", "o": ["社会历史条件(如经济、政治制度)", "个人的思想道德素质与科学文化水平", "社会生活环境(如家庭、工作环境)", "个人的意志品质与主观能动性"], "a": [0, 2], "e": "实现人生价值的客观条件包括社会历史条件和社会生活环境；B、D 属于主观条件。"}, {"id": "c2-m7", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "劳动在人生价值中的作用包括( )。", "o": ["劳动是人生社会价值的唯一标志，与自我价值无关", "劳动是实现人生价值的基本途径", "劳动是人生价值的源泉，包括物质与精神创造", "只有体力劳动才是真正创造价值的劳动"], "a": [1, 2], "e": "劳动是实现人生价值的基本途径，是人生价值的源泉（包括物质与精神创造）；A、D 的表述过于绝对、片面。"}, {"id": "c2-m8", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "实现人生价值的主观条件包括( )。", "o": ["树立与社会主导价值目标相一致的人生价值目标", "具备优越的家庭经济条件", "掌握为人民服务的本领，如专业技能", "拥有坚强的意志品质，克服困难"], "a": [0, 2, 3], "e": "主观条件包括树立正确的价值目标、掌握为人民服务的本领、具备坚强的意志品质；B 项属于客观条件。"}, {"id": "c2-m9", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "世界观的内涵包括( )。", "o": ["人们对整个客观世界的根本观点", "对人与世界关系的根本态度", "回答“思维与存在的关系”问题", "仅指对自然现象的看法，与社会无关"], "a": [0, 1, 2], "e": "世界观是对整个客观世界的根本观点和根本态度，核心是思维与存在的关系问题；D 项说法错误。"}, {"id": "c2-m10", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "multiple", "s": "下列关于个人与集体的关系表述，正确的有( )。", "o": ["集体由个人组成，个人发展促进集体进步", "个人依赖集体，通过集体力量实现价值", "集体利益与个人利益完全对立，无法协调", "个人与集体相互依存，缺 一 不可"], "a": [0, 1, 3], "e": "个人与集体相互依存：集体由个人组成，个人依赖集体并通过集体力量实现价值；C 项“完全对立”错误。"}, {"id": "c2-j1", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "人的本质属性是自然属性，社会属性受自然属性影响。( )", "o": ["正确", "错误"], "a": 1, "e": "× 人的本质属性是社会属性，自然属性从属于社会属性。"}, {"id": "c2-j2", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "积极进取的人生态度否定人的主观能动性，主张顺应命运。( )", "o": ["正确", "错误"], "a": 1, "e": "× 积极进取的人生态度恰恰肯定人的主观能动性，反对宿命论。"}, {"id": "c2-j3", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "人生价值包含自我价值与社会价值，两者相互独立、毫无关联。( )", "o": ["正确", "错误"], "a": 1, "e": "× 人生价值中的自我价值与社会价值是相互联系、辩证统一的，并非毫无关联。"}, {"id": "c2-j4", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "评价人生价值的根本尺度是个人财富积累与社会地位高低。( )", "o": ["正确", "错误"], "a": 1, "e": "× 评价人生价值的根本尺度是看其活动是否符合社会发展规律、是否满足社会发展需要，而不是财富和地位。"}, {"id": "c2-j5", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "劳动和贡献是社会评价人生价值的基本尺度。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 劳动和贡献是社会评价人生价值的基本尺度。"}, {"id": "c2-j6", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "个人与社会的关系本质上是竞争关系，两者利益不可调和。( )", "o": ["正确", "错误"], "a": 1, "e": "× 个人与社会的关系本质上是利益关系，二者相互依存、可以协调，并非不可调和。"}, {"id": "c2-j7", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "树立为人民服务的人生观无须实践，仅靠理论学习即可实现。( )", "o": ["正确", "错误"], "a": 1, "e": "× 树立为人民服务的人生观必须投身实践，在实践中养成，不能仅靠理论学习。"}, {"id": "c2-j8", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "人生价值的基本特征包括创造性、社会性和崇高性。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 人生价值具有创造性、社会性和崇高性等基本特征。"}, {"id": "c2-j9", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "实现人生价值的客观条件包括社会历史条件和个人意志品质。( )", "o": ["正确", "错误"], "a": 1, "e": "× 个人意志品质属于实现人生价值的主观条件，不是客观条件。"}, {"id": "c2-j10", "c": "第二章 树立正确的人生观，实现新时代人生价值", "t": "judge", "s": "人生价值评价中应坚持能力大小与贡献尽力相统一，而非仅看贡献绝对值。", "o": ["正确", "错误"], "a": 0, "e": "√ 人生价值评价应坚持能力大小与贡献尽力相统一，而不是只看贡献的绝对值。"}, {"id": "c3-s1", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "道德作为一种特殊的社会意识形态，起决定作用的是( )。", "o": ["政治制度", "文化传统", "传统习惯", "经济基础"], "a": 3, "e": "道德作为一种特殊的社会意识形态，由社会经济基础决定，是社会经济关系的反映。"}, {"id": "c3-s2", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "道德最突出和最主要的功能是( )。", "o": ["认识功能", "规范功能", "调节功能", "沟通功能"], "a": 2, "e": "道德最突出、最主要的功能是调节功能，即通过评价、示范等方式调节人与人、人与社会的关系。"}, {"id": "c3-s3", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "“公义胜私欲”是中华传统美德的( )。", "o": ["根本要求", "基本要求", "根本目标", "基本目标"], "a": 0, "e": "“公义胜私欲”是中华传统美德的根本要求。"}, {"id": "c3-s4", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "中国革命道德的重要环节是要求共产党人要( )。", "o": ["清正廉洁，抵制腐败", "修身自律，保持节操", "公正廉洁，立党为公", "修身养性，自立自强"], "a": 1, "e": "修身自律、保持节操是中国革命道德的重要环节，要求共产党人严于律己、坚守操守。"}, {"id": "c3-s5", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义道德建设的核心是( )。", "o": ["为人民服务", "尊老爱幼", "童叟无欺", "利己不损人"], "a": 0, "e": "社会主义道德建设的核心是为人民服务。"}, {"id": "c3-s6", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值体系的灵魂是( )。", "o": ["马克思主义指导思想", "以爱国主义为核心的民族精神", "社会主义荣辱观", "中国特色社会主义共同理想"], "a": 0, "e": "社会主义核心价值体系的灵魂是马克思主义指导思想。"}, {"id": "c3-s7", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值体系的主题是( )。", "o": ["爱国主义", "中国特色社会主义共同理想", "实现共产主义理想", "社会主义荣辱观"], "a": 1, "e": "社会主义核心价值体系的主题是中国特色社会主义共同理想。"}, {"id": "c3-s8", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值体系的精髓是( )。", "o": ["以爱国主义为核心的民族精神和以改革创新为核心的时代精神", "马克思主义指导思想", "中国特色社会主义共同理想", "社会主义荣辱观"], "a": 0, "e": "社会主义核心价值体系的精髓是以爱国主义为核心的民族精神和以改革创新为核心的时代精神。"}, {"id": "c3-s9", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "在社会主义核心价值体系中，解决人们基本行为规范问题的是( )。", "o": ["时代精神", "民族精神", "马克思主义指导思想", "社会主义荣辱观"], "a": 3, "e": "社会主义荣辱观解决的是人们的基本行为规范问题，为人们的行为提供基本遵循。"}, {"id": "c3-s10", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值观在国家层面上的概括是( )。", "o": ["富强、民主、文明、和谐", "自由、平等、公正、法治", "爱国、敬业、诚信、友善", "自由、平等、博爱、人权"], "a": 0, "e": "社会主义核心价值观在国家层面的概括是富强、民主、文明、和谐。"}, {"id": "c3-s11", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值观在社会层面上的概括是( )。", "o": ["富强、民主、文明、和谐", "自由、平等、公正、法治", "爱国、敬业、诚信、友善", "自由、平等、博爱、人权"], "a": 1, "e": "社会主义核心价值观在社会层面的概括是自由、平等、公正、法治。"}, {"id": "c3-s12", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值观在公民层面上的概括是( )。", "o": ["富强、民主、文明、和谐", "自由、平等、公正、法治", "爱国、敬业、诚信、友善", "自由、平等、博爱、人权"], "a": 2, "e": "社会主义核心价值观在公民层面的概括是爱国、敬业、诚信、友善。"}, {"id": "c3-s13", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "在社会主义集体主义道德要求中，最高层次的要求是( )。", "o": ["无私奉献，一心为公", "先公后私，先人后己", "公私兼顾，不损公肥私", "见利忘义，自私自利"], "a": 0, "e": "社会主义集体主义道德要求的最高层次是无私奉献、一心为公。"}, {"id": "c3-s14", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "在社会主义集体主义的道德要求中，对我国公民最基本的道德要求是( )。", "o": ["无私奉献，一心为公", "先公后私，先人后己", "公私兼顾，不损公肥私", "见利忘义，自私自利"], "a": 2, "e": "对我国公民最基本的道德要求是公私兼顾、不损公肥私。"}, {"id": "c3-s15", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "中华民族身份认同的重要标志是( )。", "o": ["中华传统习俗", "中国语言文字", "中华传统美德", "中华传统节日"], "a": 2, "e": "中华传统美德是中华民族身份认同的重要标志。"}, {"id": "c3-s16", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "道德调节的形式主要是( )。", "o": ["道德标准", "社会舆论", "道德评价", "大众点评"], "a": 2, "e": "道德调节的主要形式是道德评价。"}, {"id": "c3-s17", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "道德的根本是( )。", "o": ["仁", "义", "诚", "信"], "a": 2, "e": "“诚”是道德的根本。"}, {"id": "c3-s18", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义社会最起码的社会公德是( )。", "o": ["热爱劳动", "热爱人民", "热爱集体", "热爱国家"], "a": 0, "e": "热爱劳动是社会主义社会最起码的社会公德。"}, {"id": "c3-s19", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "道德调节的主体是( )。", "o": ["国家机关", "知识分子", "统治阶级", "社会一切成员"], "a": 3, "e": "道德调节的主体是社会一切成员。"}, {"id": "c3-s20", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值体系是社会主义意识形态的( )。", "o": ["根本体现", "本质体现", "实质体现", "政治体现"], "a": 1, "e": "社会主义核心价值体系是社会主义意识形态的本质体现。"}, {"id": "c3-s21", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "培育和践行社会主义核心价值观是提升中华民族和中国人民精神境界的( )。", "o": ["力量源泉", "精神支撑", "政治保证", "精神支柱"], "a": 3, "e": "培育和践行社会主义核心价值观是提升中华民族和中国人民精神境界的精神支柱。"}, {"id": "c3-s22", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "社会主义核心价值观的着眼点是培养担当民族复兴大任的( )。", "o": ["时代新人", "青年人", "党的干部", "人民大众"], "a": 0, "e": "社会主义核心价值观的着眼点是培养担当民族复兴大任的时代新人。"}, {"id": "c3-s23", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "爱科学的基本要求不包括( )。", "o": ["热爱科学、尊重知识和人才", "努力学习科学知识", "为科学献身", "尊重文凭"], "a": 3, "e": "爱科学要求热爱科学、尊重知识和人才，努力学习科学知识，为科学献身；“尊重文凭”不属于其基本要求。"}, {"id": "c3-s24", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "下列不属于中华传统美德的是( )。", "o": ["注重整体利益", "推崇“仁爱”原则", "强调个人主义", "倡导言行一致"], "a": 2, "e": "中华传统美德强调以集体和整体利益为重，推崇“仁爱”原则，倡导言行一致；“强调个人主义”与之相悖。"}, {"id": "c3-s25", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "single", "s": "加强社会主义道德建设的意义不包括( )。", "o": ["促进市场经济体制完善", "抵御西方腐朽思想", "清除封建道德影响", "提升国际地位"], "a": 3, "e": "加强社会主义道德建设有利于促进市场经济体制完善、抵御西方腐朽思想、清除封建道德影响，但“提升国际地位”不是其意义所在。"}, {"id": "c3-m1", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "道德的主要功能包括( )。", "o": ["认识功能", "规范功能", "调节功能", "教育功能"], "a": [0, 1, 2], "e": "道德的主要功能包括认识功能、规范功能和调节功能，不包括“教育功能”这一提法。"}, {"id": "c3-m2", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "继承和弘扬中华传统美德的意义包括( )。", "o": ["提升国际文化影响力的需要", "加强社会主义道德建设的需要", "个人健康成长的需要", "中国式现代化建设的客观需要"], "a": [1, 2, 3], "e": "继承和弘扬中华传统美德，是加强社会主义道德建设的需要、个人健康成长的需要、中国式现代化建设的客观需要；A 项不是其意义。"}, {"id": "c3-m3", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "社会主义道德的基本特征包括( )。", "o": ["科学性", "阶级性", "实践性", "群众性"], "a": [0, 2, 3], "e": "社会主义道德具有科学性、实践性和群众性等基本特征。"}, {"id": "c3-m4", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "社会主义道德建设的核心是“为人民服务”,其原因包括( )。", "o": ["反映社会主义社会的经济基础和人际关系的客观要求", "集中体现社会主义道德的要求", "是社会主义市场经济健康发展的基本要求", "是传统道德的继承与发展"], "a": [0, 1, 2], "e": "以为人民服务为核心，反映了社会主义社会经济基础和人际关系的客观要求，集中体现了社会主义道德的要求，也是社会主义市场经济健康发展的基本要求。"}, {"id": "c3-m5", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "社会主义集体主义原则的基本内涵包括( )。", "o": ["个人利益优先于集体利益", "集体利益高于个人利益", "重视和保障个人的正当利益", "集体利益和个人利益辩证统一"], "a": [1, 2, 3], "e": "集体主义强调集体利益高于个人利益、重视和保障个人的正当利益、集体利益与个人利益辩证统一；A 项把二者关系颠倒了。"}, {"id": "c3-m6", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "“五爱”作为社会主义道德建设的基本要求，包括( )。", "o": ["爱祖国、爱人民", "爱劳动、爱科学", "爱社会主义", "爱集体、爱家庭"], "a": [0, 1, 2], "e": "“五爱”包括爱祖国、爱人民、爱劳动、爱科学、爱社会主义；D 项不属于“五爱”的内容。"}, {"id": "c3-m7", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "社会主义核心价值体系的基本内容包括( )。", "o": ["马克思主义指导思想", "中国特色社会主义共同理想", "以爱国主义为核心的民族精神和以改革创新为核心的时代精神", "社会主义荣辱观"], "a": [0, 1, 2, 3], "e": "社会主义核心价值体系包括马克思主义指导思想、中国特色社会主义共同理想、民族精神和时代精神、社会主义荣辱观四方面内容。"}, {"id": "c3-m8", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "道德调节的特点包括( )。", "o": ["以善恶为评价标准", "通过社会舆论、传统习俗和内心信念维系", "调节主体为社会一切成员", "目标是使行为从“实然”向“应然”转化"], "a": [0, 1, 2, 3], "e": "道德调节以善恶为评价标准，通过社会舆论、传统习俗和内心信念维系，调节主体是社会一切成员，目标是使行为从“实然”向“应然”转化。"}, {"id": "c3-m9", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "培育和践行社会主义核心价值观的意义包括( )。", "o": ["实现中华民族伟大复兴的价值支撑", "提升民族精神境界的精神支柱", "引领青年人成长成才的基本途径", "促进国际文化交流的重要手段"], "a": [0, 1, 2], "e": "培育和践行社会主义核心价值观，是实现中华民族伟大复兴的价值支撑、提升民族精神境界的精神支柱、引领青年人成长成才的基本途径；D 项不属于其意义。"}, {"id": "c3-m10", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "multiple", "s": "下列关于道德本质的表述，正确的有( )。", "o": ["道德以国家强制力为保障", "道德是社会经济关系的反映", "道德由经济基础决定", "道德属于上层建筑的范畴"], "a": [1, 2, 3], "e": "道德是社会经济关系的反映、由经济基础决定、属于上层建筑范畴；它以内心信念和社会舆论为保障，不以国家强制力为保障。"}, {"id": "c3-j1", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "道德属于上层建筑的范畴，是一种特殊的社会意识形态。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 道德属于上层建筑的范畴，是一种特殊的社会意识形态。"}, {"id": "c3-j2", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "道德调节的目标是使人们的行为逐步从“应然”向“实然”转化。( )", "o": ["正确", "错误"], "a": 1, "e": "× 道德调节的目标是使行为从“实然”向“应然”转化，方向说反了。"}, {"id": "c3-j3", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "中国革命道德的重要环节是要求共产党人修身自律，保持节操。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 中国革命道德的重要环节是要求共产党人修身自律、保持节操。"}, {"id": "c3-j4", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "社会主义道德建设的原则是以爱国主义为核心。( )", "o": ["正确", "错误"], "a": 1, "e": "× 社会主义道德建设的原则是集体主义，不是以爱国主义为核心。"}, {"id": "c3-j5", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "社会主义核心价值观在国家层面的概括是“自由、平等、公正、法治”。( )", "o": ["正确", "错误"], "a": 1, "e": "× “自由、平等、公正、法治”是社会层面的概括，国家层面是“富强、民主、文明、和谐”。"}, {"id": "c3-j6", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "爱劳动是社会主义社会最起码的社会公德。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 热爱劳动是社会主义社会最起码的社会公德。"}, {"id": "c3-j7", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "中华传统美德中“讲求谦敬礼让，强调克骄防矜”体现了个人修养与处世之道。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ “讲求谦敬礼让，强调克骄防矜”体现了个人修养与处世之道，是中华传统美德的内容。"}, {"id": "c3-j8", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "加强社会主义道德建设是抵御西方腐朽思想文化侵蚀的根本措施。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 加强社会主义道德建设是抵御西方腐朽思想文化侵蚀的根本措施。"}, {"id": "c3-j9", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "集体主义原则强调集体利益与个人利益的辩证统一。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 集体主义原则强调集体利益与个人利益的辩证统一。"}, {"id": "c3-j10", "c": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "t": "judge", "s": "社会主义核心价值体系是国家文化软实力的核心内容。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 社会主义核心价值体系是国家文化软实力的核心内容。"}, {"id": "c4-s1", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列不属于当代社会公共生活特征的是( )。", "o": ["活动范围的广泛性", "活动内容的封闭性", "交往对象的复杂性", "活动方式的多样性"], "a": 1, "e": "当代社会公共生活具有活动范围广泛、活动内容公开、交往对象复杂、活动方式多样等特征；“封闭性”与之相反。"}, {"id": "c4-s2", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列不属于有序的公共生活对社会的重要作用的是( )。", "o": ["社会生产活动的重要基础", "促进社会和谐的重要条件", "提高社会成员生活质量的基本保障", "个人利益最大化的关键因素"], "a": 3, "e": "有序的公共生活是社会生产活动的重要基础、促进社会和谐的重要条件、提高社会成员生活质量的基本保障；“个人利益最大化”不是其作用。"}, {"id": "c4-s3", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列属于社会公德主要内容的是( )。", "o": ["爱岗敬业", "尊老爱幼", "保护环境", "夫妻和睦"], "a": 2, "e": "社会公德的主要内容包括文明礼貌、助人为乐、爱护公物、保护环境、遵纪守法，保护环境属于其中之一；其余属职业道德或家庭美德。"}, {"id": "c4-s4", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "社会主义职业道德中最高层次的要求是( )。", "o": ["爱岗敬业", "服务群众", "奉献社会", "办事公道"], "a": 2, "e": "社会主义职业道德中最高层次的要求是奉献社会。"}, {"id": "c4-s5", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "婚姻家庭关系的本质体现是( )。", "o": ["自然属性", "社会属性", "经济属性", "文化属性"], "a": 1, "e": "婚姻家庭关系由社会生产关系决定，其本质体现是社会属性，自然属性只是前提。"}, {"id": "c4-s6", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列属于道德修养核心目的的是( )。", "o": ["提高道德实践能力", "实现物质利益最大化", "获得社会荣誉", "提升职业技能"], "a": 0, "e": "道德修养的核心目的是提高道德实践能力。"}, {"id": "c4-s7", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列不属于个人品德特征的是( )。", "o": ["实践性", "偶然性", "综合性", "稳定性"], "a": 1, "e": "个人品德具有实践性、综合性和稳定性；“偶然性”不是个人品德的特征。"}, {"id": "c4-s8", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列不属于个人品德作用的是( )。", "o": ["促进道德和法律作用的发挥", "个人实现自我完善的内在根据", "社会经济发展的物质基础", "经济社会发展进程中重要的主体精神力量"], "a": 2, "e": "个人品德能促进道德和法律作用的发挥、是个人自我完善的内在根据、是经济社会发展中重要的主体精神力量；“物质基础”不属于其作用。"}, {"id": "c4-s9", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列不属于个人品德养成的方法的是( )。", "o": ["提高个人道德修养的自觉性", "依赖他人监督", "自觉地向先进模范人物学习", "积极参与社会实践"], "a": 1, "e": "个人品德养成要靠提高自觉性、向先进模范学习、积极参与社会实践；“依赖他人监督”不是正确方法。"}, {"id": "c4-s10", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列属于道德修养方法的是( )。", "o": ["慎独自律", "盲目从众", "忽视实践", "拒绝学习"], "a": 0, "e": "慎独自律属于道德修养方法；盲目从众、忽视实践、拒绝学习都是错误的。"}, {"id": "c4-s11", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "“勿以恶小而为之，勿以善小而不为”体现了道德规范中下列哪项的要求?( )", "o": ["社会公德", "职业道德", "家庭美德", "法律规范"], "a": 0, "e": "“勿以恶小而为之，勿以善小而不为”讲的是从小事做起遵守公共生活中的行为规范，体现社会公德的要求。"}, {"id": "c4-s12", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "在职业道德中，“诚实守信”被称为( )。", "o": ["现代人和从业者成功进入社会和职业殿堂的“准入证”", "提升个人物质生活水平的手段", "实现职业竞争优势的途径", "满足个人兴趣爱好的方式"], "a": 0, "e": "诚实守信是现代人和从业者成功进入社会和职业殿堂的“准入证”。"}, {"id": "c4-s13", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "家庭美德中“邻里团结”的意义是( )。", "o": ["构建和谐社区的重要基础", "追求个人名誉的手段", "提升职业发展的途径", "无关紧要的生活细节"], "a": 0, "e": "邻里团结是构建和谐社区的重要基础。"}, {"id": "c4-s14", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "下列不属于道德素质核心构成的是( )。", "o": ["政治素养", "道德品质", "法律意识", "职业技能"], "a": 3, "e": "道德素质的核心构成包括政治素养、道德品质、法律意识等，职业技能不属于道德素质。"}, {"id": "c4-s15", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "道德修养方法中的“省察克治”指的是( )。", "o": ["通过不断反省自我，及时抑制和克服自身的不良念头及行为", "盲目跟随他人行为", "忽视自身缺点", "拒绝接受批评"], "a": 0, "e": "“省察克治”指通过不断反省自我，及时抑制和克服自身的不良念头及行为。"}, {"id": "c4-s16", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "公共生活具有鲜明的( )。", "o": ["封闭性和隐秘性", "开放性和透明性", "个体性和独立性", "随意性和主观性"], "a": 1, "e": "公共生活具有鲜明的开放性和透明性。"}, {"id": "c4-s17", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "社会公德中，最基本的要求是( )。", "o": ["文明礼貌", "助人为乐", "遵纪守法", "爱护公物"], "a": 2, "e": "遵纪守法是社会公德中最基本的要求。"}, {"id": "c4-s18", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "职业道德中，“爱岗敬业”的核心是( )。", "o": ["对工作的高度责任感和深厚感情", "追求高薪待遇", "完成最低工作要求", "满足个人兴趣"], "a": 0, "e": "爱岗敬业的核心是对工作的高度责任感和深厚感情。"}, {"id": "c4-s19", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "婚姻家庭关系的自然属性是( )。", "o": ["形成和发展的前提条件", "本质属性", "社会生产的基础", "法律规定的义务"], "a": 0, "e": "自然属性是婚姻家庭关系形成和发展的前提条件，社会属性才是其本质。"}, {"id": "c4-s20", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "个人品德的形成途径是( )。", "o": ["天生具备", "通过社会道德教育和个人自觉的道德修养形成", "环境影响无作用", "依赖他人督促"], "a": 1, "e": "个人品德通过社会道德教育和个人自觉的道德修养形成。"}, {"id": "c4-s21", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "道德修养方法中，“积善成德”强调的是( )。", "o": ["在日常生活中不断积累善行或美德并强化巩固", "只做大事，忽视小事", "追求形式，不重实质", "拒绝帮助他人"], "a": 0, "e": "“积善成德”强调在日常生活中不断积累善行或美德并加以强化巩固。"}, {"id": "c4-s22", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "职业道德中，“表述方式多样性”指的是( )。", "o": ["不同行业有不同的道德要求表述", "道德规范无统一标准", "可以随意解释职业道德", "职业道德无须明确规范"], "a": 0, "e": "职业道德表述方式的多样性，指不同行业有不同的道德要求表述，并不意味着可以随意解释。"}, {"id": "c4-s23", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "家庭美德中，“勤俭持家”的要求是( )。", "o": ["盲目消费，追求奢华", "勤劳致富且科学合理地安排家庭经济生活", "忽视家庭经济管理", "只注重物质消费"], "a": 1, "e": "“勤俭持家”要求勤劳致富并科学合理地安排家庭经济生活。"}, {"id": "c4-s24", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "道德修养的实质是( )。", "o": ["在社会各种道德体系和道德观念的冲突中，自己与自己“打官司”", "社会与个人的矛盾冲突", "忽视道德规范的约束冲突中", "单纯的理论学习"], "a": 0, "e": "道德修养的实质，是在社会各种道德体系和道德观念的冲突中自己与自己“打官司”，即自我反省、自我改造。"}, {"id": "c4-s25", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "single", "s": "个人品德对社会的作用是(   )。", "o": ["推动道德和法律作用的发挥", "无关社会发展", "仅影响个人生活", "阻碍社会进步"], "a": 0, "e": "个人品德对社会的作用是推动道德和法律作用的发挥。"}, {"id": "c4-m1", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "当代社会公共生活的特征包括( )。", "o": ["活动范围因网络发展扩展至虚拟世界", "活动内容对社会成员公开透明", "交往对象突破熟人圈呈现复杂性", "活动方式随社会发展日益多样化"], "a": [0, 1, 2, 3], "e": "当代社会公共生活的特征包括活动范围因网络发展扩展至虚拟世界、活动内容对社会成员公开透明、交往对象突破熟人圈、活动方式日益多样化。"}, {"id": "c4-m2", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "社会公德涵盖的关系范畴包括( )。", "o": ["人与人之间的交往伦理", "人与社会的责任义务", "人与自然的生态保护", "人与职业的道德规范"], "a": [0, 1, 2], "e": "社会公德涵盖人与人之间的交往伦理、人与社会的责任义务、人与自然的生态保护；D 项属于职业道德范畴。"}, {"id": "c4-m3", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "自觉遵守社会公德的要求包括( )。", "o": ["仅在他人监督下规范自身行为", "在实践中培养主动维护公德的意识", "通过小事积累提升公德践行能力", "系统学习公共生活中的有关法律和社会公德基本规范"], "a": [1, 2, 3], "e": "自觉遵守社会公德要在实践中培养主动维护公德的意识、通过小事积累提升公德践行能力、系统学习有关法律和社会公德规范；A 项“仅在他人监督下”是错误的。"}, {"id": "c4-m4", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "职业道德的特征包括( )。", "o": ["适用范围受职业责任限制的有限性", "职业传统与规范的历史继承性", "不同行业表述方式的多样性", "部分规范具有法治背景下的强制性"], "a": [0, 1, 2, 3], "e": "职业道德具有适用范围受限的有限性、历史继承性、表述方式的多样性和一定的强制性四项特征。"}, {"id": "c4-m5", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "婚姻家庭关系的属性包括( )。", "o": ["以生理因素为前提的自然属性", "由社会生产关系决定的社会属性", "以经济利益为核心的功利属性", "由法律强制规定的约束属性"], "a": [0, 1], "e": "婚姻家庭关系包括以生理因素为前提的自然属性和由社会生产关系决定的社会属性；C、D 不是其属性。"}, {"id": "c4-m6", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "家庭美德的内容包括( )。", "o": ["尊老爱幼：赡养老人与教育子女的责任", "男女平等：夫妻权利与人格地位的平等", "勤俭持家：科学安排家庭经济生活", "遵纪守法：社会公德的最基本要求"], "a": [0, 1, 2], "e": "家庭美德包括尊老爱幼、男女平等、夫妻和睦、勤俭持家、邻里团结；D 项“遵纪守法”属于社会公德。"}, {"id": "c4-m7", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "加强道德修养的目的包括( )。", "o": ["提升思想道德认知水平与判断能力", "激发向善的道德意愿与情感", "培育正确的道德责任意识", "提高自觉践行道德的能力"], "a": [0, 1, 2, 3], "e": "加强道德修养的目的包括提升思想道德认知水平与判断能力、激发向善的道德意愿与情感、培育正确的道德责任意识、提高自觉践行道德的能力。"}, {"id": "c4-m8", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "个人品德的作用体现在( )。", "o": ["促进社会道德与法律作用的发挥", "作为个人自我完善的内在依据", "构成经济社会发展进程中重要的主体精神力量", "直接决定物质生活水平的高低"], "a": [0, 1, 2], "e": "个人品德的作用有：促进社会道德与法律作用的发挥、作为个人自我完善的内在依据、构成经济社会发展中重要的主体精神力量；D 项说法错误。"}, {"id": "c4-m9", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "下列属于道德修养方法的有( )。", "o": ["盲目从众：跟随他人行为，无须自省", "积善成德：不断积累善行或美德", "知行统一：将道德认知转化为行为", "学思并重：学习与思考结合，明辨善恶"], "a": [1, 2, 3], "e": "道德修养方法包括积善成德、知行统一、学思并重等；A 项“盲目从众”是错误的修养态度。"}, {"id": "c4-m10", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "multiple", "s": "弘扬家庭美德对社会的重要性体现在( )。", "o": ["促进家庭和睦与亲人相亲相爱", "保障下一代健康成长与赡养老年人", "为社会和谐提供基础支撑", "与社会文明进步无直接关联"], "a": [0, 1, 2], "e": "弘扬家庭美德有利于促进家庭和睦、保障下一代健康成长和赡养老人、为社会和谐提供基础支撑；D 项说法错误。"}, {"id": "c4-j1", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "公共生活具有鲜明的封闭性和隐秘性。( )", "o": ["正确", "错误"], "a": 1, "e": "× 公共生活具有鲜明的开放性和透明性，不是封闭性和隐秘性。"}, {"id": "c4-j2", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "当代社会公共生活的特征包括活动范围的广泛性和交往对象的复杂性。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 当代社会公共生活具有活动范围的广泛性和交往对象的复杂性等特征。"}, {"id": "c4-j3", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "社会公德的主要内容包括文明礼貌、助人为乐、爱护公物、保护环境、遵纪守法。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ 社会公德的主要内容包括文明礼貌、助人为乐、爱护公物、保护环境、遵纪守法。"}, {"id": "c4-j4", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "自觉遵守社会公德只需培养意识，无须实践。( )", "o": ["正确", "错误"], "a": 1, "e": "× 遵守社会公德既要培养意识，更要在实践中养成，二者不可偏废。"}, {"id": "c4-j5", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "职业道德的基本规范包括爱岗敬业、诚实守信、办事公道、服务群众、奉献社会。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ 职业道德的基本规范是爱岗敬业、诚实守信、办事公道、服务群众、奉献社会。"}, {"id": "c4-j6", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "奉献社会是社会主义职业道德的最高层次要求。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 奉献社会是社会主义职业道德的最高层次要求。"}, {"id": "c4-j7", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "家庭美德的主要内容包括尊老爱幼、男女平等、夫妻和睦、勤俭持家、邻里团结。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ 家庭美德包括尊老爱幼、男女平等、夫妻和睦、勤俭持家、邻里团结。"}, {"id": "c4-j8", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "“慎独自律”是指在无人监督时仍坚守道德操守。( )", "o": ["正确", "错误"], "a": 0, "e": "√ “慎独自律”指在无人监督时仍坚守道德操守。"}, {"id": "c4-j9", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "家庭美德中，“男女平等”仅指夫妻权利平等。( )", "o": ["正确", "错误"], "a": 1, "e": "× “男女平等”不仅指夫妻权利平等，还包括人格地位平等。"}, {"id": "c4-j10", "c": "第四章 遵守社会道德规范，注重个人品德修养", "t": "judge", "s": "弘扬家庭美德对社会和谐无直接影响。( )", "o": ["正确", "错误"], "a": 1, "e": "× 弘扬家庭美德是社会和谐的重要基础，对社会和谐有直接影响。"}, {"id": "c5-s1", "c": "第五章 法学基础理论", "t": "single", "s": "国家机关赋予某些既存社会规范以法律效力，或赋予先前的判例以法律效力的活 动是( )。", "o": ["认可", "承认", "加入", "制定"], "a": 0, "e": "国家机关赋予某些既存社会规范或先前判例以法律效力的活动，属于法律创制方式中的“认可”。"}, {"id": "c5-s2", "c": "第五章 法学基础理论", "t": "single", "s": "法律上的权利和义务具有( )。", "o": ["相关性", "相反性", "一致性", "差异性"], "a": 2, "e": "法律上的权利和义务是相互依存、相互对应的，具有一致性。"}, {"id": "c5-s3", "c": "第五章 法学基础理论", "t": "single", "s": "法律体现的意志是( )。", "o": ["个别统治者的意志", "多数统治者的共同意志", "统治者个人意志的简单相加", "统治阶级的整体意志或共同意志"], "a": 3, "e": "法律体现的是统治阶级的整体意志或共同意志，而不是个别统治者或个人意志的简单相加。"}, {"id": "c5-s4", "c": "第五章 法学基础理论", "t": "single", "s": "下列不属于我国社会主义法律的规范作用的是( )。", "o": ["指引作用", "说服作用", "评价作用", "预测作用"], "a": 1, "e": "我国社会主义法律的规范作用包括指引、评价、预测、教育和强制作用；“说服作用”不属于其中。"}, {"id": "c5-s5", "c": "第五章 法学基础理论", "t": "single", "s": "有立法权的国家机关按照法定职权和程序制定规范性法律文件的活动是( )", "o": ["法律渊源", "法律遵守", "法律制定", "法律实施"], "a": 2, "e": "有立法权的国家机关按照法定职权和程序制定规范性法律文件的活动，是法律制定。"}, {"id": "c5-s6", "c": "第五章 法学基础理论", "t": "single", "s": "一个国家全部现行法律规范在分类组合为不同法律部门的基础上构成的有机联系 的统一整体是( )。", "o": ["法律制度", "法律渊源", "法律部门", "法律体系"], "a": 3, "e": "一国全部现行法律规范分类组合为不同法律部门而形成的有机统一整体，是法律体系。"}, {"id": "c5-s7", "c": "第五章 法学基础理论", "t": "single", "s": "国家司法机关及其公职人员按照法定职权和程序适用法律规范处理具体案件的专 门活动是( )。", "o": ["法律实施", "法律制定", "法律适用", "法律遵守"], "a": 2, "e": "国家司法机关及其公职人员依职权和程序适用法律规范处理具体案件的专门活动，是法律适用。"}, {"id": "c5-s8", "c": "第五章 法学基础理论", "t": "single", "s": "我国法律适用的基本要求包括正确、合法、及时、合理和( )。", "o": ["人 权", "民主", "公正", "诚 信"], "a": 2, "e": "我国法律适用的基本要求是正确、合法、及时、合理和公正。"}, {"id": "c5-s9", "c": "第五章 法学基础理论", "t": "single", "s": "我国法律适用的基本原则之一是公民在适用法律上( )。", "o": ["应该平等", "一律平等", "应该公开", "一律公开"], "a": 1, "e": "公民在适用法律上一律平等，是我国法律适用的基本原则之一。"}, {"id": "c5-s10", "c": "第五章 法学基础理论", "t": "single", "s": "在我国，守法的主体是( )。", "o": ["一切国家机关和武装力量", "各政党和各社会团体", "各企业事业组织", "一切组织和个人"], "a": 3, "e": "在我国，守法的主体是一切组织和个人。"}, {"id": "c5-s11", "c": "第五章 法学基础理论", "t": "single", "s": "实施了违法行为的自然人和法人或社会组织是( )。", "o": ["违法行为的客体", "违法行为的客观方面", "违法行为的主体", "违法行为的主观方面"], "a": 2, "e": "实施了违法行为的自然人和法人或社会组织，是违法行为的主体。"}, {"id": "c5-s12", "c": "第五章 法学基础理论", "t": "single", "s": "违法行为人在主观上有过错是违法行为的( )。", "o": ["主观方面", "主体", "客观方面", "客体"], "a": 0, "e": "违法行为人在主观上有过错，属于违法行为的主观方面。"}, {"id": "c5-s13", "c": "第五章 法学基础理论", "t": "single", "s": "违法行为的客体是指被违法行为所侵害的而为我国法律所保护的( )。", "o": ["公共安全", "国家和个人财产", "公民利益", "社会关系和社会秩序"], "a": 3, "e": "违法行为的客体，是指被违法行为侵害的、为我国法律所保护的社会关系和社会秩序。"}, {"id": "c5-s14", "c": "第五章 法学基础理论", "t": "single", "s": "必须对社会造成一定危害的行为，即行为具有社会危害性是违法行为的( )。", "o": ["主观方面", "主体", "客观方面", "客体"], "a": 2, "e": "行为具有社会危害性，即对社会造成一定危害，属于违法行为的客观方面。"}, {"id": "c5-s15", "c": "第五章 法学基础理论", "t": "single", "s": "社会主义民主是社会主义法制的前提和( )。", "o": ["主观方面", "保 障", "体现", "基础"], "a": 3, "e": "社会主义民主是社会主义法制的前提和基础。"}, {"id": "c5-s16", "c": "第五章 法学基础理论", "t": "single", "s": "人民当家作主和依法治国的根本保证是( )。", "o": ["社会主义道路", "社会主义制度", "党的领导", "人民代表大会制度"], "a": 2, "e": "党的领导是人民当家作主和依法治国的根本保证。"}, {"id": "c5-s17", "c": "第五章 法学基础理论", "t": "single", "s": "社会主义民主政治的本质要求是( )。", "o": ["党的领导", "人民当家作主", "依法治国", "社会主义制度"], "a": 1, "e": "人民当家作主是社会主义民主政治的本质要求。"}, {"id": "c5-s18", "c": "第五章 法学基础理论", "t": "single", "s": "党领导人民治理国家的基本方略是( )。", "o": ["站稳人民立场", "以经济建设为中心", "社会主义现代化", "依法治国"], "a": 3, "e": "依法治国是党领导人民治理国家的基本方略。"}, {"id": "c5-s19", "c": "第五章 法学基础理论", "t": "single", "s": "法治表示一种理性的办事原则，任何社会组织和个人必须( )。", "o": ["遵守法制", "依法办事", "崇尚平等", "讲求程序"], "a": 1, "e": "法治是一种理性的办事原则，要求任何社会组织和个人必须依法办事。"}, {"id": "c5-s20", "c": "第五章 法学基础理论", "t": "single", "s": "建设中国特色社会主义法治体系，建设社会主义法治国家是( )。", "o": ["国家发展的总要求", "社会和谐的保障", "全面依法治国的总目标", "中国特色社会主义的发展目标"], "a": 2, "e": "建设中国特色社会主义法治体系、建设社会主义法治国家，是全面依法治国的总目标。"}, {"id": "c5-s21", "c": "第五章 法学基础理论", "t": "single", "s": "中国特色社会主义法治道路本质上是中国特色社会主义道路在法治领域 的 ( )。", "o": ["具体体现", "集中体现", "综合体现", "统一体现"], "a": 0, "e": "中国特色社会主义法治道路，本质上是中国特色社会主义道路在法治领域的具体体现。"}, {"id": "c5-s22", "c": "第五章 法学基础理论", "t": "single", "s": "坚持依法治国首先要坚持( )。", "o": ["依章治国", "依德治国", "依宪治国", "依习惯治国"], "a": 2, "e": "坚持依法治国首先要坚持依宪治国。"}, {"id": "c5-s23", "c": "第五章 法学基础理论", "t": "single", "s": "法治是国家治理体系和治理能力的( )。", "o": ["集中体现", "基本方式", "显著优势", "重要依托"], "a": 3, "e": "法治是国家治理体系和治理能力的重要依托。"}, {"id": "c5-s24", "c": "第五章 法学基础理论", "t": "single", "s": "坚持依法治国、依法执政、依法行政共同推进，坚持法治国家、法治政府、法治社会( )。", "o": ["共同建设", "同步推进", "一体建设", "一体推进"], "a": 2, "e": "坚持依法治国、依法执政、依法行政共同推进，坚持法治国家、法治政府、法治社会一体建设。"}, {"id": "c5-s25", "c": "第五章 法学基础理论", "t": "single", "s": "全面依法治国要统筹国内法治和( )。", "o": ["涉外法治", "境外法治", "国际法治", "国际规则"], "a": 0, "e": "全面依法治国要统筹推进国内法治和涉外法治。"}, {"id": "c5-m1", "c": "第五章 法学基础理论", "t": "multiple", "s": "法律发展史上曾先后产生过的法律制度类型有( )。", "o": ["奴隶制法律", "封建制法律", "资本主义法律", "社会主义法律"], "a": [0, 1, 2, 3], "e": "法律发展史上先后产生过奴隶制法律、封建制法律、资本主义法律和社会主义法律四种类型。"}, {"id": "c5-m2", "c": "第五章 法学基础理论", "t": "multiple", "s": "法律的基本特征包括( )。", "o": ["法律是调整社会关系的行为规范", "法律是由国家制定或认可的行为规范", "法律是规定权利和义务的社会规范", "法律是由国家强制力保证实施的社会规范"], "a": [0, 1, 2, 3], "e": "法律是调整社会关系的行为规范，由国家制定或认可，规定权利和义务，并由国家强制力保证实施。"}, {"id": "c5-m3", "c": "第五章 法学基础理论", "t": "multiple", "s": "我国社会主义法律的特点有( )。", "o": ["阶级性和人民性的统一", "科学性和公正性的统一", "权利和义务的统 一", "国家强制力和人民自觉遵守的统一"], "a": [0, 1, 2, 3], "e": "我国社会主义法律具有阶级性和人民性、科学性和公正性、权利和义务、国家强制力和人民自觉遵守相统一等特点。"}, {"id": "c5-m4", "c": "第五章 法学基础理论", "t": "multiple", "s": "我国社会主义法律的社会作用包括( )。", "o": ["确立和维护人民民主专政的国家制度", "确立和维护社会主义的经济制度", "确立和维护和谐稳定的社会秩序", "推动社会改革与进步"], "a": [0, 1, 2, 3], "e": "我国社会主义法律的社会作用包括确立和维护人民民主专政的国家制度、社会主义经济制度、和谐稳定的社会秩序，推动社会改革与进步。"}, {"id": "c5-m5", "c": "第五章 法学基础理论", "t": "multiple", "s": "全国人民代表大会的立法程序包括的环节有( )。", "o": ["法律案的提出", "法律案的审议", "法律案的表决", "法律的公布"], "a": [0, 1, 2, 3], "e": "全国人民代表大会的立法程序包括法律案的提出、审议、表决和公布四个环节。"}, {"id": "c5-m6", "c": "第五章 法学基础理论", "t": "multiple", "s": "下列关于法律的实施，说法正确的有( )。", "o": ["社会主义法律的实施是指社会主义法律在社会生活中的具体运用和实现", "法律的实施方式包括法律适用和法律遵守", "法律适用包括立法活动、执法活动和司法活动", "我国的司法机关包括公安机关、检察机关和审判机关"], "a": [0, 1], "e": "法律的实施方式包括法律适用和法律遵守；法律适用不包括立法活动，我国司法机关是审判机关和检察机关，不含公安机关。"}, {"id": "c5-m7", "c": "第五章 法学基础理论", "t": "multiple", "s": "按照违法行为的性质和危害程度，法律责任一般分为( )。", "o": ["民事法律责任", "行政法律责任", "刑事法律责任", "违宪责任"], "a": [0, 1, 2, 3], "e": "按照违法行为的性质和危害程度，法律责任一般分为民事、行政、刑事和违宪责任。"}, {"id": "c5-m8", "c": "第五章 法学基础理论", "t": "multiple", "s": "下列关于犯罪的说法，正确的有( )。", "o": ["犯罪危害统治阶级利益和统治秩序", "刑法尚未规定但社会危害性较大的行为也是犯罪", "犯罪是严重的违法行为", "违法不一定犯罪"], "a": [0, 2, 3], "e": "犯罪危害统治阶级利益和统治秩序，是严重的违法行为；违法不一定犯罪，刑法未规定的行为不能认定为犯罪。"}, {"id": "c5-m9", "c": "第五章 法学基础理论", "t": "multiple", "s": "中国特色社会主义法治体系包括完备的法律规范体系和( )。", "o": ["高效的法治实施体系", "严密的法治监督体系", "有力的法治保障体系", "完善的党内法规体系"], "a": [0, 1, 2, 3], "e": "中国特色社会主义法治体系包括完备的法律规范体系、高效的法治实施体系、严密的法治监督体系、有力的法治保障体系和完善的党内法规体系。"}, {"id": "c5-m10", "c": "第五章 法学基础理论", "t": "multiple", "s": "全面依法治国的总目标要实现( )。", "o": ["科学立法", "严格执法", "公正司法", "全民守法"], "a": [0, 1, 2, 3], "e": "全面依法治国的总目标要求实现科学立法、严格执法、公正司法、全民守法。"}, {"id": "c5-j1", "c": "第五章 法学基础理论", "t": "judge", "s": "法律一开始就以成文法的形式存在。( )", "o": ["正确", "错误"], "a": 1, "e": "× 法律最初是以习惯法的形式存在的，成文法出现较晚。"}, {"id": "c5-j2", "c": "第五章 法学基础理论", "t": "judge", "s": "法律是人作为一个社会成员应该遵守的较高的社会规范。( )", "o": ["正确", "错误"], "a": 1, "e": "× 法律是全体社会成员必须遵守的最低限度的行为规范，是“底线”而非“较高”要求。"}, {"id": "c5-j3", "c": "第五章 法学基础理论", "t": "judge", "s": "我国社会主义法律的制定要结合我国国情，汲取和借鉴外国法律创制的经验。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ 我国社会主义法律的制定要立足国情，同时汲取和借鉴外国法律创制的经验。"}, {"id": "c5-j4", "c": "第五章 法学基础理论", "t": "judge", "s": "中国特色社会主义法律体系包括法律、行政法规、地方性法规三个层次。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 中国特色社会主义法律体系包括法律、行政法规、地方性法规三个层次。"}, {"id": "c5-j5", "c": "第五章 法学基础理论", "t": "judge", "s": "仅有思想意识活动，没有危害社会的行为也会构成违法。( )", "o": ["正确", "错误"], "a": 1, "e": "× 违法必须具有危害社会的行为，仅有思想意识活动不构成违法。"}, {"id": "c5-j6", "c": "第五章 法学基础理论", "t": "judge", "s": "法治的真正实现，需要公民对法律至高无上的神圣性、权威性的情感认同。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ 法治的真正实现需要公民对法律神圣性、权威性的情感认同。"}, {"id": "c5-j7", "c": "第五章 法学基础理论", "t": "judge", "s": "全面依法治国最广泛、最深厚的基础是人民。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 全面依法治国最广泛、最深厚的基础是人民。"}, {"id": "c5-j8", "c": "第五章 法学基础理论", "t": "judge", "s": "党领导人民制定宪法法律，领导人民实施宪法法律，党自身不需要在宪法法律范围内活动。( )", "o": ["正确", "错误"], "a": 1, "e": "× 党领导人民制定和实施宪法法律，自身也必须在宪法法律范围内活动。"}, {"id": "c5-j9", "c": "第五章 法学基础理论", "t": "judge", "s": "中国特色社会主义法治体系是推进全面依法治国的总抓手。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 中国特色社会主义法治体系是推进全面依法治国的总抓手。"}, {"id": "c5-j10", "c": "第五章 法学基础理论", "t": "judge", "s": "全面依法治国要坚持抓住法治专门队伍这个“关键少数”。( )", "o": ["正确", "错误"], "a": 1, "e": "× 全面依法治国要抓住领导干部这个“关键少数”，不是法治专门队伍。"}, {"id": "c6-s1", "c": "第六章 宪 法", "t": "single", "s": "宪法是治国安邦的( )。", "o": ["总纲", "总纲领", "总 章", "总章程"], "a": 3, "e": "宪法是治国安邦的总章程。"}, {"id": "c6-s2", "c": "第六章 宪 法", "t": "single", "s": "我国现行的《中华人民共和国宪法》的颁布时间是( )。", "o": ["1978 年", "1980 年", "1982 年", "1988年"], "a": 2, "e": "我国现行宪法是1982年颁布的，此后经过五次修正。"}, {"id": "c6-s3", "c": "第六章 宪 法", "t": "single", "s": "现行宪法制定和实施以来，以修正案的形式修改了( )。", "o": ["两次", "三次", "四次", "五次"], "a": 3, "e": "现行宪法颁布实施以来，以修正案形式修改了五次（1988、1993、1999、2004、2018年）。"}, {"id": "c6-s4", "c": "第六章 宪 法", "t": "single", "s": "未被剥夺政治权利的中华人民共和国公民，享有选举权和被选举权的年龄 是 ( )。", "o": ["年满十六周岁", "年满十八周岁", "年满二十周岁", "年满二十二周岁"], "a": 1, "e": "年满十八周岁且未被剥夺政治权利的公民，享有选举权和被选举权。"}, {"id": "c6-s5", "c": "第六章 宪 法", "t": "single", "s": "由于国家机关和国家工作人员侵犯公民的权利而受到损失的人，有依照法律规定 取得赔偿的权利，这项权利叫作( )。", "o": ["控告权", "申诉权", "取得赔偿权", "批评建议权"], "a": 2, "e": "因国家机关及其工作人员侵犯权利而受损失的人依法取得赔偿的权利，叫取得赔偿权。"}, {"id": "c6-s6", "c": "第六章 宪 法", "t": "single", "s": "社会经济权是指公民在哪方面享有的权利?( )", "o": ["私有财产保护", "经济交往自由", "物质奖励", "经济生活和物质利益"], "a": 3, "e": "社会经济权是公民在经济生活和物质利益方面享有的权利。"}, {"id": "c6-s7", "c": "第六章 宪 法", "t": "single", "s": "中华人民共和国公民在年老、疾病或者丧失劳动能力的情况下，有从国家和社会 获得( )。", "o": ["赠送财物的权利", "物质帮助的权利", "救济的权利", "扶养的权利"], "a": 1, "e": "公民在年老、疾病或丧失劳动能力时，有从国家和社会获得物质帮助的权利。"}, {"id": "c6-s8", "c": "第六章 宪 法", "t": "single", "s": "公民必须遵守宪法和法律，保守国家秘密，爱护公共财产，遵守劳动纪律，遵守 公共秩序，尊重( )。", "o": ["道德", "社会习俗", "规章制度", "社会公德"], "a": 3, "e": "公民必须遵守宪法和法律、保守国家秘密、爱护公共财产、遵守劳动纪律和公共秩序，尊重社会公德。"}, {"id": "c6-s9", "c": "第六章 宪 法", "t": "single", "s": "中华人民共和国公民的义务是维护祖国的安全、荣誉和( )。", "o": ["主权", "统一", "利益", "权 益"], "a": 2, "e": "公民有维护祖国的安全、荣誉和利益的义务。"}, {"id": "c6-s10", "c": "第六章 宪 法", "t": "single", "s": "中华人民共和国的根本制度是( )。", "o": ["社会主义制度", "无产阶级专政制度", "人民民主专政制度", "人民代表大会制度"], "a": 0, "e": "中华人民共和国的根本制度是社会主义制度。"}, {"id": "c6-s11", "c": "第六章 宪 法", "t": "single", "s": "人民民主专政的重要保障是( )。", "o": ["人民民主专政制度", "人民代表大会制度", "爱国统一战线", "政治协商制度"], "a": 2, "e": "爱国统一战线是人民民主专政的重要保障。"}, {"id": "c6-s12", "c": "第六章 宪 法", "t": "single", "s": "我国的根本政治制度是( )。", "o": ["社会主义制度", "无产阶级专政制度", "人民民主专政制度", "人民代表大会制度"], "a": 3, "e": "我国的根本政治制度是人民代表大会制度。"}, {"id": "c6-s13", "c": "第六章 宪 法", "t": "single", "s": "中国共产党领导的多党合作和政治协商制度是我国的一项( )。", "o": ["根本政治制度", "基本政治制度", "根本协商制度", "基本协商制度"], "a": 1, "e": "中国共产党领导的多党合作和政治协商制度是我国的一项基本政治制度。"}, {"id": "c6-s14", "c": "第六章 宪 法", "t": "single", "s": "中华人民共和国的社会主义经济制度的基础是生产资料的社会主义公有制，即全民所有制和( )。", "o": ["个体经济", "私营经济", "劳动群众集体所有制", "外资企业"], "a": 2, "e": "社会主义经济制度的基础是生产资料的社会主义公有制，即全民所有制和劳动群众集体所有制。"}, {"id": "c6-s15", "c": "第六章 宪 法", "t": "single", "s": "下列土地属于国家所有的是( )。", "o": ["城市", "城郊", "农 村", "自留山"], "a": 0, "e": "城市的土地属于国家所有。"}, {"id": "c6-s16", "c": "第六章 宪 法", "t": "single", "s": "一个国家采取何种形式来划分国家的内部区域，调整整体和部分之间、中央机关 和地方机关之间的相互关系是指( )。", "o": ["国家制度形式", "国家结构形式", "国家央地关系", "国家行政区划"], "a": 1, "e": "划分国家内部区域、调整整体与部分、中央与地方关系的形式，是国家结构形式。"}, {"id": "c6-s17", "c": "第六章 宪 法", "t": "single", "s": "我国一般行政区划实行几级基本层次划分的体制?( )", "o": ["一级", "二级", "三级", "四级"], "a": 2, "e": "我国一般行政区划实行省、县、乡三级基本层次划分的体制。"}, {"id": "c6-s18", "c": "第六章 宪 法", "t": "single", "s": "全国人民代表大会是我国最高的国家权力机关，每届任期( )。", "o": ["三年", "四 年", "两年", "五年"], "a": 3, "e": "全国人民代表大会是最高的国家权力机关，每届任期五年。"}, {"id": "c6-s19", "c": "第六章 宪 法", "t": "single", "s": "全国人民代表大会的代表，省 、自治区、直辖市、设区的市、自治州的人民代表大会的代表，其选举方式是( )。", "o": ["选民直接选举", "下一级人民代表大会选举", "全国人民选举", "民主党派选举"], "a": 1, "e": "省、自治区、直辖市、设区的市、自治州的人大代表，由下一级人民代表大会选举产生。"}, {"id": "c6-s20", "c": "第六章 宪 法", "t": "single", "s": "不设区的市、市辖区、县、自治县、乡、民族乡、镇的人民代表大会的代表，所 采用的选举方式是( )。", "o": ["选民直接选举", "下一级人民代表大会选举", "全国人民选举", "民主党派选举"], "a": 0, "e": "不设区的市、市辖区、县、自治县、乡、民族乡、镇的人大代表，由选民直接选举产生。"}, {"id": "c6-s21", "c": "第六章 宪 法", "t": "single", "s": "全国人民代表大会常务委员会是全国人民代表大会的( )。", "o": ["议事机关", "协调机关", "常设机关", "执行机关"], "a": 2, "e": "全国人民代表大会常务委员会是全国人民代表大会的常设机关。"}, {"id": "c6-s22", "c": "第六章 宪 法", "t": "single", "s": "有选举权和被选举权的中华人民共和国公民可以被选为中华人民共和国主席、副 主席的年龄是( )。", "o": ["年满三十五周岁", "年满四十周岁", "年满四十五周岁", "年满五十周岁"], "a": 2, "e": "有选举权和被选举权的公民，年满四十五周岁可以被选为国家主席、副主席。"}, {"id": "c6-s23", "c": "第六章 宪 法", "t": "single", "s": "地方各级人民代表大会每届任期( )。", "o": ["三 年", "四年", "两年", "五年"], "a": 3, "e": "地方各级人民代表大会每届任期五年。"}, {"id": "c6-s24", "c": "第六章 宪 法", "t": "single", "s": "监察委员会是国家的( )。", "o": ["法律监督机关", "监察机关", "权力机关", "审判机关"], "a": 1, "e": "监察委员会是国家的监察机关。"}, {"id": "c6-s25", "c": "第六章 宪 法", "t": "single", "s": "人民检察院是国家的( )。", "o": ["审判机关", "权力机关", "法律监督机关", "行政机关"], "a": 2, "e": "人民检察院是国家的法律监督机关。"}, {"id": "c6-m1", "c": "第六章 宪 法", "t": "multiple", "s": "我国宪法的特征是( )。", "o": ["宪法内容的根本性", "宪法效力的最高性", "宪法条款的规范性", "宪法制定和修改程序的严格性"], "a": [0, 1, 3], "e": "我国宪法具有内容的根本性、效力的最高性和制定修改程序的严格性；条款的规范性是法律的一般特征。"}, {"id": "c6-m2", "c": "第六章 宪 法", "t": "multiple", "s": "政治权利和自由主要包括( )。", "o": ["选举权和被选举权", "宗教信仰自由", "政治自由", "平等权"], "a": [0, 2], "e": "政治权利和自由主要包括选举权和被选举权以及政治自由。"}, {"id": "c6-m3", "c": "第六章 宪 法", "t": "multiple", "s": "人身自由权主要包括( )。", "o": ["公民的人身自由不受侵犯", "公民的人格尊严不受侵犯", "公民的住宅不受侵犯", "公民的通信自由和通信秘密受法律保护"], "a": [0, 1, 2, 3], "e": "人身自由权包括人身自由不受侵犯、人格尊严不受侵犯、住宅不受侵犯、通信自由和通信秘密受法律保护。"}, {"id": "c6-m4", "c": "第六章 宪 法", "t": "multiple", "s": "关于我国公民的基本义务，下列说法正确的有( )。", "o": ["公民有维护国家统一和民族团结的义务", "公民有保守国家秘密的义务", "公民有保卫祖国的义务", "父母有抚养教育子女的义务"], "a": [0, 1, 2], "e": "我国宪法规定的公民基本义务包括维护国家统一和民族团结、保守国家秘密、保卫祖国等；D 项属于婚姻家庭领域的义务。"}, {"id": "c6-m5", "c": "第六章 宪 法", "t": "multiple", "s": "下列关于人民民主专政的说法，正确的有( )。", "o": ["人民民主专政是我国的国体", "爱国统一战线是人民民主专政的重要保障", "人民民主专政是我国的国家制度之一", "爱国统一战线的存在，是我国人民民主专政国家政权的重要特点之一"], "a": [0, 1, 2, 3], "e": "人民民主专政是我国的国体，爱国统一战线是其重要保障，也是我国人民民主专政国家政权的重要特点之一。"}, {"id": "c6-m6", "c": "第六章 宪 法", "t": "multiple", "s": "人民政协的主要职能包括( )。", "o": ["政治协商", "民主监督", "参政议政", "为维护世界和平服务"], "a": [0, 1, 2], "e": "人民政协的主要职能是政治协商、民主监督、参政议政。"}, {"id": "c6-m7", "c": "第六章 宪 法", "t": "multiple", "s": "下列职权归全国人民代表大会行使的有( )。", "o": ["修改宪法", "制定和修改基本法律", "监督宪法的实施", "选举、决定和罢免最高国家机关领导人员"], "a": [0, 1, 2, 3], "e": "全国人民代表大会行使修改宪法、制定和修改基本法律、监督宪法实施、选举决定和罢免最高国家机关领导人员等职权。"}, {"id": "c6-m8", "c": "第六章 宪 法", "t": "multiple", "s": "全国人民代表大会常务委员会的组成人员有( )。", "o": ["委员长", "副委员长若干人", "秘书长", "委员若干人"], "a": [0, 1, 2, 3], "e": "全国人大常委会由委员长、副委员长若干人、秘书长和委员若干人组成。"}, {"id": "c6-m9", "c": "第六章 宪 法", "t": "multiple", "s": "下列关于国务院的职权，正确的是( )。", "o": ["根据宪法和法律，规定行政措施，制定行政法规", "领导和管理经济工作和城乡建设、生态文明建设", "批准省、自治区、直辖市的区域划分", "宣布全国进入紧急状态"], "a": [0, 1, 2], "e": "国务院有权规定行政措施、制定行政法规，领导和管理经济工作和城乡建设、生态文明建设，批准省级区域划分；宣布全国进入紧急状态是全国人大常委会的职权。"}, {"id": "c6-m10", "c": "第六章 宪 法", "t": "multiple", "s": "县级以上的地方各级人民代表大会选举并且有权罢免( )。", "o": ["本级监察委员会主任", "本级人民法院院长", "上级人民检察院检察长", "本级人民检察院检察长"], "a": [0, 1, 3], "e": "县级以上地方各级人民代表大会选举并有权罢免本级监察委员会主任、本级人民法院院长和本级人民检察院检察长。"}, {"id": "c6-j1", "c": "第六章 宪 法", "t": "judge", "s": "法律和其他议案的修改由全国人民代表大会以全体代表的三分之二以上多数同意 才能通过。( )", "o": ["正确", "错误"], "a": 1, "e": "× 宪法的修改由全国人大以全体代表的三分之二以上多数通过，法律和其他议案由过半数通过。"}, {"id": "c6-j2", "c": "第六章 宪 法", "t": "judge", "s": "任何人不得利用宗教进行破坏社会秩序、损害公民身体健康、妨碍国家教育制度 的活动。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 任何人不得利用宗教进行破坏社会秩序、损害公民身体健康、妨碍国家教育制度的活动。"}, {"id": "c6-j3", "c": "第六章 宪 法", "t": "judge", "s": "申诉、控告、检举权是指公民对任何国家工作人员的行政行为不满，有向有关机 关提出申诉、控告或者检举的权利。( )", "o": ["正确", "错误"], "a": 1, "e": "× 申诉、控告、检举权针对的是国家机关和国家工作人员的违法失职行为，不是“任何行政行为不满”。"}, {"id": "c6-j4", "c": "第六章 宪 法", "t": "judge", "s": "劳动权和休息权属于人身自由权。( )", "o": ["正确", "错误"], "a": 1, "e": "× 劳动权和休息权属于社会经济权利，不属于人身自由权。"}, {"id": "c6-j5", "c": "第六章 宪 法", "t": "judge", "s": "公民的合法的私有财产不受侵犯。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 公民的合法的私有财产不受侵犯。"}, {"id": "c6-j6", "c": "第六章 宪 法", "t": "judge", "s": "夫妻双方有实行计划生育的义务。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 夫妻双方有实行计划生育的义务。"}, {"id": "c6-j7", "c": "第六章 宪 法", "t": "judge", "s": "民族区域自治制度是实行区域自治的民族的公民自主管理本民族内部事务的制度。 ( )", "o": ["正确", "错误"], "a": 0, "e": "√ 民族区域自治制度是实行区域自治的民族的公民自主管理本民族内部事务的制度。"}, {"id": "c6-j8", "c": "第六章 宪 法", "t": "judge", "s": "中央军事委员会主席由全国人民代表大会选举产生。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 中央军事委员会主席由全国人民代表大会选举产生。"}, {"id": "c6-j9", "c": "第六章 宪 法", "t": "judge", "s": "人民法院审理案件，除法律规定的特别情况外，不得向外公开进行。( )", "o": ["正确", "错误"], "a": 1, "e": "× 人民法院审理案件，除法律规定的特别情况外，应当公开进行。"}, {"id": "c6-j10", "c": "第六章 宪 法", "t": "judge", "s": "最高人民检察院领导地方各级人民检察院和专门人民检察院的工作，上级人民检 察院领导下级人民检察院的工作。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 最高人民检察院领导地方各级和专门人民检察院的工作，上级人民检察院领导下级人民检察院的工作。"}, {"id": "c7-s1", "c": "第七章 民 法", "t": "single", "s": "我国民法的基本原则之一是( )。", "o": ["道德原则", "自由原则", "绿色原则", "规范原则"], "a": 2, "e": "我国民法的基本原则包括平等、自愿、公平、诚信、守法与公序良俗、绿色原则，绿色原则是其中之一。"}, {"id": "c7-s2", "c": "第七章 民 法", "t": "single", "s": "由民法规范调整的、以权利义务为内容的社会关系是( )。", "o": ["民事法律关系", "民事法律关系主体", "民事法律关系客体", "民事法律关系内容"], "a": 0, "e": "由民法规范调整的、以权利义务为内容的社会关系，是民事法律关系。"}, {"id": "c7-s3", "c": "第七章 民 法", "t": "single", "s": "自然人的民事权利能力始于出生，终于( )。", "o": ["六十周岁", "七十周岁", "八十周岁", "死 亡"], "a": 3, "e": "自然人的民事权利能力始于出生、终于死亡。"}, {"id": "c7-s4", "c": "第七章 民 法", "t": "single", "s": "自然人取得完全民事行为能力的法定年龄是( )。", "o": ["十八周岁", "十周岁", "十六周岁", "二十周岁"], "a": 0, "e": "自然人年满十八周岁，取得完全民事行为能力。"}, {"id": "c7-s5", "c": "第七章 民 法", "t": "single", "s": "不能完全辨认自己行为的成年人是( )。", "o": ["完全民事行为能力人", "限制民事行为能力人", "无民事行为能力人", "一般民事行为能力人"], "a": 1, "e": "不能完全辨认自己行为的成年人，是限制民事行为能力人。"}, {"id": "c7-s6", "c": "第七章 民 法", "t": "single", "s": "未成年人的父母已经死亡或者没有监护能力的，首先由下列有监护能力的人按顺 序担任监护人( )。", "o": ["祖父母、外祖父母", "兄、姐", "居民委员会、村民委员会", "其他组织和个人"], "a": 0, "e": "未成年人的父母死亡或没有监护能力时，首先由祖父母、外祖父母按顺序担任监护人。"}, {"id": "c7-s7", "c": "第七章 民 法", "t": "single", "s": "个体工商户是指从事工商业经营，经依法登记的( )。", "o": ["自 然 人", "营利法人", "特别法人", "非法人组织"], "a": 0, "e": "个体工商户是从事工商业经营、经依法登记的自然人。"}, {"id": "c7-s8", "c": "第七章 民 法", "t": "single", "s": "具有民事权利能力和民事行为能力，依法独立享有民事权利和承担民事义务的组 织 是 ( )。", "o": ["事业单位", "法人", "社会团体", "社会服务机构"], "a": 1, "e": "具有民事权利能力和民事行为能力，依法独立享有民事权利、承担民事义务的组织，是法人。"}, {"id": "c7-s9", "c": "第七章 民 法", "t": "single", "s": "农村集体经济组织法人属于( )。", "o": ["营利法人", "非营利法人", "特别法人", "特殊法人"], "a": 2, "e": "农村集体经济组织法人属于特别法人。"}, {"id": "c7-s10", "c": "第七章 民 法", "t": "single", "s": "下列关于非法人组织的说法，不正确的是( )。", "o": ["非法人组织不具有法人资格，但是能够依法以自己的名义从事民事活动", "非法人组织包括个人独资企业、合伙企业、不具有法人资格的专业服务机构等", "非法人组织应当依照法律的规定登记", "非法人组织的财产不足以清偿债务的，其出资人或者设立人承担有限责任"], "a": 3, "e": "非法人组织的财产不足以清偿债务时，其出资人或设立人承担的是无限责任，因此 D 项说法不正确。"}, {"id": "c7-s11", "c": "第七章 民 法", "t": "single", "s": "下列不属于可撤销民事法律行为的是( )。", "o": ["违背公序良俗", "重大误解", "欺诈、胁迫", "乘人之危显失公平"], "a": 0, "e": "违背公序良俗的民事法律行为无效，不属于可撤销的民事法律行为。"}, {"id": "c7-s12", "c": "第七章 民 法", "t": "single", "s": "民事法律行为的效力有待于第三人意思表示，在第三人意思表示前，效力处于不 确定状态的民事法律行为是( )。", "o": ["无效民事法律行为", "可撤销民事法律行为", "效力待定民事法律行为", "民事法律行为"], "a": 2, "e": "效力有待第三人意思表示、在第三人表示前处于不确定状态的，是效力待定民事法律行为。"}, {"id": "c7-s13", "c": "第七章 民 法", "t": "single", "s": "代理人按照被代理人的委托行使代理权是( )。", "o": ["委托代理", "指定代理", "法定代理", "一般代理"], "a": 0, "e": "代理人按照被代理人的委托行使代理权的，是委托代理。"}, {"id": "c7-s14", "c": "第七章 民 法", "t": "single", "s": "所有权人对自己的不动产或者动产 ，依法享有占有 、使用 、收益和 处分的权利是 ( )。", "o": ["用益物权", "所有权", "担保物权", "债权"], "a": 1, "e": "所有权人对自己的不动产或者动产依法享有占有、使用、收益和处分的权利，即所有权。"}, {"id": "c7-s15", "c": "第七章 民 法", "t": "single", "s": "共有是指两个以上的民事主体对同一项财产享有所有权。共有包括按份共有 和 ( )。", "o": ["个人共有", "组织共有", "管理共有", "共同共有"], "a": 3, "e": "共有包括按份共有和共同共有。"}, {"id": "c7-s16", "c": "第七章 民 法", "t": "single", "s": "为满足生活居住的需要，依合同约定，对他人的住宅享有占有、使用的用益物权是 ( )。", "o": ["租赁权", "地役权", "居住权", "留住权"], "a": 2, "e": "为满足生活居住需要，依合同约定对他人的住宅享有占有、使用权的用益物权是居住权。"}, {"id": "c7-s17", "c": "第七章 民 法", "t": "single", "s": "除法律另有规定或者当事人另有约定外，合同成立的时间是( )。", "o": ["承诺生效时", "要约生效时", "意思表示时", "签名盖章时"], "a": 0, "e": "除法律另有规定或者当事人另有约定外，合同自承诺生效时成立。"}, {"id": "c7-s18", "c": "第七章 民 法", "t": "single", "s": "自然人的生命安全和生命尊严受法律保护，任何组织或者个人不得侵害他人的 ( )。", "o": ["健康权", "生命权", "身体权", "人身权"], "a": 1, "e": "自然人的生命安全和生命尊严受法律保护，任何组织和个人不得侵害他人的生命权。"}, {"id": "c7-s19", "c": "第七章 民 法", "t": "single", "s": "夫妻在婚姻关系存续期间所得的下列财产中，属于夫妻共同财产的是( )。", "o": ["一方因受到人身损害获得的赔偿", "遗嘱中确定只归 一 方的财产", "工资、奖金、劳务报酬", "一 方专用的生活用品"], "a": 2, "e": "夫妻在婚姻关系存续期间所得的工资、奖金、劳务报酬属于夫妻共同财产；A、B、D 属于个人财产。"}, {"id": "c7-s20", "c": "第七章 民 法", "t": "single", "s": "继承开始的时间是被继承人( )。", "o": ["出生时", "死亡时", "立遗嘱时", "遗产分割时"], "a": 1, "e": "继承自被继承人死亡时开始。"}, {"id": "c7-s21", "c": "第七章 民 法", "t": "single", "s": "立有多份内容相抵触的遗嘱，以哪份遗嘱为准?( )", "o": ["最先的", "公 证 的", "最后的", "自 书 的"], "a": 2, "e": "立有数份内容相抵触的遗嘱时，以最后的遗嘱为准。"}, {"id": "c7-s22", "c": "第七章 民 法", "t": "single", "s": "下列财产中不能作为遗产的是( )。", "o": ["房屋", "合法收入", "抚恤金", "储蓄"], "a": 2, "e": "抚恤金是对死者近亲属的抚慰和补偿，不属于死者遗产，不能作为遗产继承。"}, {"id": "c7-s23", "c": "第七章 民 法", "t": "single", "s": "行为人因过错侵害他人民事权益造成损害的，应当承担的侵权责任是( )。", "o": ["过错责任", "连带责任", "无过错责任", "公平责任"], "a": 0, "e": "行为人因过错侵害他人民事权益造成损害的，应当承担过错责任。"}, {"id": "c7-s24", "c": "第七章 民 法", "t": "single", "s": "因正当防卫造成损害的，是否要承担民事责任?( )", "o": ["承担大部分", "承担部分", "不承担", "应该承担"], "a": 2, "e": "因正当防卫造成损害的，不承担民事责任。"}, {"id": "c7-s25", "c": "第七章 民 法", "t": "single", "s": "因自愿实施紧急救助行为造成受助人损害的，救助人是否要承担民事责任? ( )", "o": ["应该承担", "不承担", "视情况而定", "承担部分"], "a": 1, "e": "因自愿实施紧急救助行为造成受助人损害的，救助人不承担民事责任。"}, {"id": "c7-m1", "c": "第七章 民 法", "t": "multiple", "s": "民事责任根据责任发生的原因与法律要件不同，可以分为( )。", "o": ["违约责任", "侵权责任", "侵害责任", "其他责任"], "a": [0, 1, 3], "e": "民事责任根据发生原因与法律要件的不同，可以分为违约责任、侵权责任和其他责任。"}, {"id": "c7-m2", "c": "第七章 民 法", "t": "multiple", "s": "下列选项中属于承担民事责任的方式的是( )。", "o": ["停止侵害", "排除妨碍", "继续履行", "赔偿损失"], "a": [0, 1, 2, 3], "e": "承担民事责任的方式包括停止侵害、排除妨碍、继续履行、赔偿损失等。"}, {"id": "c7-m3", "c": "第七章 民 法", "t": "multiple", "s": "下列选项中属于监护人职责的有( )。", "o": ["代理被监护人实施民事法律行为", "承担刑事责任", "保护被监护人的人身权利", "保护被监护人的财产权利及其他合法权益等"], "a": [0, 2, 3], "e": "监护人的职责包括代理被监护人实施民事法律行为、保护被监护人的人身权利以及财产权利和其他合法权益；承担刑事责任不是监护职责。"}, {"id": "c7-m4", "c": "第七章 民 法", "t": "multiple", "s": "民事法律行为有效，应具备的条件有( )。", "o": ["行为人具有相应的民事行为能力", "意思表示真实", "不违反法律、行政法规的强制性规定", "不违背公序良俗"], "a": [0, 1, 2, 3], "e": "民事法律行为有效应具备：行为人具有相应的民事行为能力、意思表示真实、不违反法律行政法规的强制性规定、不违背公序良俗。"}, {"id": "c7-m5", "c": "第七章 民 法", "t": "multiple", "s": "请求权不适用诉讼时效的规定，下列符合的有( )。", "o": ["请求停止侵害、排除妨碍、消除危险", "不动产物权和登记的动产物权的权利人请求返还财产", "请求支付抚养费、赡养费或者扶养费", "依法不适用诉讼时效的其他请求权"], "a": [0, 1, 2, 3], "e": "请求停止侵害排除妨碍消除危险、不动产物权和登记的动产物权人请求返还财产、请求支付抚养费赡养费扶养费等请求权，不适用诉讼时效。"}, {"id": "c7-m6", "c": "第七章 民 法", "t": "multiple", "s": "担保物权包括( )。", "o": ["抵押权", "质权", "留置权", "地役权"], "a": [0, 1, 2], "e": "担保物权包括抵押权、质权和留置权；地役权属于用益物权。"}, {"id": "c7-m7", "c": "第七章 民 法", "t": "multiple", "s": "合同的内容由当事人约定，一般包括的条款有( )。", "o": ["当事人的姓名", "标的", "数量", "质量"], "a": [0, 1, 2, 3], "e": "合同内容由当事人约定，一般包括当事人的姓名（名称）、标的、数量、质量等条款。"}, {"id": "c7-m8", "c": "第七章 民 法", "t": "multiple", "s": "下列属于人格权特征的有( )。", "o": ["固有性", "专属性", "对世性", "具有防御性、积极利用的权能"], "a": [0, 1, 2, 3], "e": "人格权具有固有性、专属性、对世性，并具有防御性和积极利用的权能。"}, {"id": "c7-m9", "c": "第七章 民 法", "t": "multiple", "s": "下列属于我国婚姻家庭法的基本原则的有( )。", "o": ["婚姻自由原则", "一夫一妻原则", "男女平等原则", "最有利于被收养人原则"], "a": [0, 1, 2, 3], "e": "我国婚姻家庭法的基本原则包括婚姻自由、一夫一妻、男女平等、最有利于被收养人等原则。"}, {"id": "c7-m10", "c": "第七章 民 法", "t": "multiple", "s": "侵权责任的免除和减轻事由主要有( )。", "o": ["受害人过错", "受害人故意", "第三人过错", "自甘风险"], "a": [0, 1, 2, 3], "e": "侵权责任的免除和减轻事由主要有受害人过错、受害人故意、第三人过错和自甘风险。"}, {"id": "c7-j1", "c": "第七章 民 法", "t": "judge", "s": "民事法律关系包括人身关系和财产关系。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 民事法律关系包括人身关系和财产关系。"}, {"id": "c7-j2", "c": "第七章 民 法", "t": "judge", "s": "赔礼道歉不属于承担民事责任的方式。( )", "o": ["正确", "错误"], "a": 1, "e": "× 赔礼道歉是承担民事责任的方式之一。"}, {"id": "c7-j3", "c": "第七章 民 法", "t": "judge", "s": "因保护他人民事权益使自己受到损害的，由受益人承担民事责任。( )", "o": ["正确", "错误"], "a": 1, "e": "× 因保护他人民事权益使自己受到损害的，由侵权人承担民事责任，受益人可以给予适当补偿。"}, {"id": "c7-j4", "c": "第七章 民 法", "t": "judge", "s": "不满八周岁的未成年人，可以独立实施纯获利益的民事法律行为。( )", "o": ["正确", "错误"], "a": 1, "e": "× 不满八周岁的未成年人是无民事行为能力人，应由其法定代理人代理实施民事法律行为。"}, {"id": "c7-j5", "c": "第七章 民 法", "t": "judge", "s": "被撤销的民事法律行为自被撤销时没有法律约束力。( )", "o": ["正确", "错误"], "a": 1, "e": "× 被撤销的民事法律行为自始没有法律约束力，不是自撤销时才无效。"}, {"id": "c7-j6", "c": "第七章 民 法", "t": "judge", "s": "诉讼时效是指权利人在法定期限内不行使自己的权利，法律规定其胜诉权归于消 失的时效制度。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 诉讼时效指权利人在法定期限内不行使权利，法律规定其胜诉权归于消灭的时效制度。"}, {"id": "c7-j7", "c": "第七章 民 法", "t": "judge", "s": "船舶、航空器和机动车等物权的设立、变更、转让和消灭，未经登记，不发生效力。( )", "o": ["正确", "错误"], "a": 1, "e": "× 船舶、航空器、机动车等的物权变动未经登记，不得对抗善意第三人，而非不发生效力。"}, {"id": "c7-j8", "c": "第七章 民 法", "t": "judge", "s": "合同的履行，是指债务人或第三人完成作为合同债务内容的给付，并因此使合同债权目的得以实现。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 合同履行是债务人或第三人完成合同债务内容的给付，使债权目的得以实现。"}, {"id": "c7-j9", "c": "第七章 民 法", "t": "judge", "s": "无因管理是指管理人没有法律规定或者约定的义务，为避免他人利益受损失而管 理他人事务的行为。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 无因管理指管理人没有法定或约定义务，为避免他人利益受损而管理他人事务的行为。"}, {"id": "c7-j10", "c": "第七章 民 法", "t": "judge", "s": "环境污染和生态破坏责任适用过错责任原则。( )", "o": ["正确", "错误"], "a": 1, "e": "× 环境污染和生态破坏责任适用无过错责任原则。"}, {"id": "c8-s1", "c": "第八章 刑 法", "t": "single", "s": "统治阶级为了维护本阶级的政治统治和经济利益，根据本阶级意志，通过国家立 法程序制定的关于犯罪和刑罚的法律规范的总称是( )。", "o": ["民 法", "刑 法", "行政法", "刑事诉讼法"], "a": 1, "e": "统治阶级为维护其政治统治和经济利益，依据本阶级意志、通过国家立法程序制定的关于犯罪和刑罚的法律规范的总称是刑法。"}, {"id": "c8-s2", "c": "第八章 刑 法", "t": "single", "s": "刑罚的轻重，应当与犯罪分子所犯罪行和承担的刑事责任相适应。这是指 ( )。", "o": ["罪刑法定原则", "适用刑法人人平等原则", "罪刑相适应原则", "刑事司法公正原则"], "a": 2, "e": "刑罚的轻重应当与犯罪分子所犯罪行和承担的刑事责任相适应，这是罪刑相适应原则。"}, {"id": "c8-s3", "c": "第八章 刑 法", "t": "single", "s": "刑法在什么地域、对什么人和在什么时间适用，以及是否具有溯及既往的效力， 又称刑法的适用范围的是( )。", "o": ["刑法的时间效力", "刑法的空间效力", "普遍管辖权", "刑法的效力范围"], "a": 3, "e": "刑法在什么地域、对什么人、在什么时间适用以及是否溯及既往，合称刑法的效力范围。"}, {"id": "c8-s4", "c": "第八章 刑 法", "t": "single", "s": "凡在中华人民共和国领域内犯罪的，除法律有特别规定的以外，都适用我国刑法。 这属于我国刑法中的( )。", "o": ["属地管辖权", "属人管辖权", "保护管辖权", "普遍管辖权"], "a": 0, "e": "凡在我国领域内犯罪的，除法律有特别规定外都适用我国刑法，这属于属地管辖权。"}, {"id": "c8-s5", "c": "第八章 刑 法", "t": "single", "s": "我国刑法中规定以保护各国共同利益为标准的管辖权是( )。", "o": ["属地管辖权", "属人管辖权", "保护管辖权", "普遍管辖权"], "a": 3, "e": "以保护各国共同利益为标准确定的管辖权是普遍管辖权。"}, {"id": "c8-s6", "c": "第八章 刑 法", "t": "single", "s": "我国刑法在溯及力问题上采用的原则是( )。", "o": ["“从旧兼从轻”", "“从旧兼从重”", "“从新兼从轻”", "“从新兼从重”"], "a": 0, "e": "我国刑法在溯及力问题上采用“从旧兼从轻”原则。"}, {"id": "c8-s7", "c": "第八章 刑 法", "t": "single", "s": "犯罪行为和由这种行为所造成的危害结果是( )。", "o": ["犯罪主观方面", "犯罪构成", "犯罪客观方面", "犯罪客体"], "a": 2, "e": "犯罪行为以及由这种行为造成的危害结果，属于犯罪客观方面。"}, {"id": "c8-s8", "c": "第八章 刑 法", "t": "single", "s": "刑法所规定的行为人对自己的犯罪行为负刑事责任必须达到的年龄是( ) 。", "o": ["刑事责任年龄", "刑事责任能力", "犯罪主观方面", "犯罪客观方面"], "a": 0, "e": "刑法规定的行为人对自己的犯罪行为负刑事责任必须达到的年龄，是刑事责任年龄。"}, {"id": "c8-s9", "c": "第八章 刑 法", "t": "single", "s": "已满多少周岁的人犯罪，应当承担完全刑事责任( )。", "o": ["十二周岁", "十四周岁", "十六周岁", "十八周岁"], "a": 2, "e": "已满十六周岁的人犯罪，应当负完全刑事责任。"}, {"id": "c8-s10", "c": "第八章 刑 法", "t": "single", "s": "已满多少周岁的人故意犯罪的，可以从轻或者减轻处罚( )。", "o": ["五十周岁", "六十周岁", "七十周岁", "七十五周岁"], "a": 3, "e": "已满七十五周岁的人故意犯罪的，可以从轻或者减轻处罚。"}, {"id": "c8-s11", "c": "第八章 刑 法", "t": "single", "s": "尚未完全丧失辨认或者控制自己行为能力的精神病人犯罪的，应当负刑事责任， 但是可以( )。", "o": ["从轻处罚", "减轻处罚", "从轻或者减轻处罚", "从轻、减轻或者免除处罚"], "a": 2, "e": "尚未完全丧失辨认或者控制自己行为能力的精神病人犯罪的，应当负刑事责任，但可以从轻或者减轻处罚。"}, {"id": "c8-s12", "c": "第八章 刑 法", "t": "single", "s": "犯罪主体明知自己的行为会发生危害社会的结果，并且希望或者放任这种结果发生的一种心理态度是( )。", "o": ["犯罪目的", "犯罪动机", "犯罪故意", "犯罪过失"], "a": 2, "e": "明知自己的行为会发生危害社会的结果，并且希望或者放任这种结果发生的心理态度，是犯罪故意。"}, {"id": "c8-s13", "c": "第八章 刑 法", "t": "single", "s": "对于过失犯罪，什么情况下负刑事责任? ( )", "o": ["造成重大损失的", "情节严重的", "刑法中有明确规定的", "严重危害社会秩序的"], "a": 2, "e": "过失行为只有刑法中有明确规定的，才负刑事责任。"}, {"id": "c8-s14", "c": "第八章 刑 法", "t": "single", "s": "行为在客观上虽然造成了损害结果，但是不是由于故意或者过失，而是由于不能 抗拒或者不能预见的原因所引起的( )。", "o": ["免予处罚", "从轻处罚", "减轻处罚", "不是犯罪"], "a": 3, "e": "行为在客观上造成损害结果，但不是出于故意或过失，而是由不能抗拒或不能预见的原因引起的，不是犯罪。"}, {"id": "c8-s15", "c": "第八章 刑 法", "t": "single", "s": "为了使国家、公共利益、本人或者他人的人身、财产和其他权利免受正在发生的 危险，不得已而采取的损害另一较小合法利益的行为是( )。", "o": ["正当防卫", "意外事件", "紧急避险", "犯罪"], "a": 2, "e": "为使国家、公共利益、本人或他人的人身财产等权利免受正在发生的危险，不得已损害另一较小合法利益的行为，是紧急避险。"}, {"id": "c8-s16", "c": "第八章 刑 法", "t": "single", "s": "犯罪分子已经着手实行犯罪，但由于犯罪分子意志以外的原因而未能得逞是 ( )。", "o": ["犯罪预备", "犯罪中止", "犯罪既遂", "犯罪未遂"], "a": 3, "e": "已经着手实行犯罪，但由于犯罪分子意志以外的原因未能得逞的，是犯罪未遂。"}, {"id": "c8-s17", "c": "第八章 刑 法", "t": "single", "s": "下列关于共同犯罪说法正确的是( )。", "o": ["共同犯罪的人数应为三人以上", "共同犯罪包括共同故意犯罪和共同过失犯罪", "犯罪主体不需要都达到刑事责任年龄", "共同犯罪按他们犯的罪分别处罚"], "a": 3, "e": "共同犯罪人的刑事责任，按照各自在共同犯罪中的地位、作用和所犯的罪分别确定；共同犯罪须二人以上、只能是共同故意犯罪，主体须达到刑事责任年龄。"}, {"id": "c8-s18", "c": "第八章 刑 法", "t": "single", "s": "人民法院判决的，对犯罪人不予关押，但限制其一定自由，依法实行社区矫正的 刑罚方法是( )。", "o": ["管制", "拘役", "有期徒刑", "无期徒刑"], "a": 0, "e": "对犯罪人不予关押，但限制其一定自由、依法实行社区矫正的刑罚方法是管制。"}, {"id": "c8-s19", "c": "第八章 刑 法", "t": "single", "s": "被判处拘役的犯罪人，判决执行前先行羁押的，羁押一日折抵刑期( )。", "o": ["半日", "一 日", "二日", "三日"], "a": 1, "e": "被判处拘役的犯罪人，判决执行前先行羁押的，羁押一日折抵刑期一日。"}, {"id": "c8-s20", "c": "第八章 刑 法", "t": "single", "s": "剥夺犯罪人一定期限的人身自由，并强制劳动改造的刑罚方法是( )。", "o": ["管制", "拘役", "有期徒刑", "无期徒刑"], "a": 2, "e": "剥夺犯罪人一定期限的人身自由并强制劳动改造的刑罚方法是有期徒刑。"}, {"id": "c8-s21", "c": "第八章 刑 法", "t": "single", "s": "有期徒刑的期限为六个月以上十五年以下，数罪并罚时有期徒刑总和刑期不满三 十五年的，最高不能超过二十年，总和刑期在三十五年以上的，最高不能超过( )。", "o": ["十八年", "三十年", "二十年", "二十五年"], "a": 3, "e": "数罪并罚时，有期徒刑总和刑期在三十五年以上的，最高不能超过二十五年。"}, {"id": "c8-s22", "c": "第八章 刑 法", "t": "single", "s": "犯罪的时候不满十八周岁的人和审判的时候怀孕的妇女( )。", "o": ["可以适用死刑", "经核准适用死刑", "一般不适用死刑", "不适用死刑"], "a": 3, "e": "犯罪时不满十八周岁的人和审判时怀孕的妇女，不适用死刑。"}, {"id": "c8-s23", "c": "第八章 刑 法", "t": "single", "s": "下列不属于附加刑的是( )。", "o": ["管制", "罚金", "剥夺政治权利", "没收财产"], "a": 0, "e": "管制属于主刑，不属于附加刑；罚金、剥夺政治权利、没收财产都是附加刑。"}, {"id": "c8-s24", "c": "第八章 刑 法", "t": "single", "s": "被判处有期徒刑以上刑罚，在刑罚执行完毕或赦免之后，在五年以内再犯应当判 处有期徒刑以上刑罚之故意犯罪的犯罪人是( )。", "o": ["一般累犯", "重大累犯", "特殊累犯", "特别累犯"], "a": 0, "e": "被判处有期徒刑以上刑罚，刑罚执行完毕或赦免后五年以内再犯应当判处有期徒刑以上刑罚之故意犯罪的，是一般累犯。"}, {"id": "c8-s25", "c": "第八章 刑 法", "t": "single", "s": "人民法院对犯罪人依法裁量决定刑罚的审判活动是( )。", "o": ["数罪并罚", "缓刑", "量刑", "减刑"], "a": 2, "e": "人民法院对犯罪人依法裁量决定刑罚的审判活动是量刑。"}, {"id": "c8-m1", "c": "第八章 刑 法", "t": "multiple", "s": "刑法的基本原则包括( )。", "o": ["罪刑法定原则", "适用刑法人人平等原则", "罪刑相适应原则", "公平原则"], "a": [0, 1, 2], "e": "刑法的基本原则包括罪刑法定原则、适用刑法人人平等原则和罪刑相适应原则；公平原则不是刑法的基本原则。"}, {"id": "c8-m2", "c": "第八章 刑 法", "t": "multiple", "s": "下面关于犯罪的基本特征的说法，正确的有( )。", "o": ["具有严重的社会危害性是犯罪最本质的特征", "刑事违法性是指行为触犯了我国法律规范", "应受刑罚惩罚性是犯罪的一个基本特征", "犯罪和违法的制裁方式不同"], "a": [0, 2], "e": "犯罪具有严重的社会危害性、刑事违法性和应受刑罚惩罚性三个基本特征；B 项应表述为触犯刑事法律规范。"}, {"id": "c8-m3", "c": "第八章 刑 法", "t": "multiple", "s": "犯罪的客体分为( )。", "o": ["一般客体", "特殊客体", "同类客体", "直接客体"], "a": [0, 2, 3], "e": "犯罪客体分为一般客体、同类客体和直接客体。"}, {"id": "c8-m4", "c": "第八章 刑 法", "t": "multiple", "s": "正当防卫行为应具备的条件有( )。", "o": ["必须是为了使国家、公共利益、本人或者他人的人身、财产和其他权利免受不法 侵害", "必须是有危害社会的不法侵害行为的发生", "必须是针对正在进行的不法侵害", "必须是针对实施不法侵害人本人"], "a": [0, 1, 2, 3], "e": "正当防卫须为保护合法权益免受不法侵害、有不法侵害行为发生、针对正在进行的不法侵害、针对不法侵害人本人。"}, {"id": "c8-m5", "c": "第八章 刑 法", "t": "multiple", "s": "犯罪由于主客观原因而停止在某个阶段，表现为未完成形态，具体包括( )。", "o": ["犯罪中止", "犯罪未遂", "犯罪预备", "犯罪既遂"], "a": [0, 1, 2], "e": "犯罪的未完成形态包括犯罪预备、犯罪未遂和犯罪中止；犯罪既遂是完成形态。"}, {"id": "c8-m6", "c": "第八章 刑 法", "t": "multiple", "s": "我国刑法根据各共同犯罪人在共同犯罪中所处的地位和所起的作用，以及对社会的 危害程度的不同，将共同犯罪人分为( )。", "o": ["主犯", "从犯", "胁从犯", "教唆犯"], "a": [0, 1, 2, 3], "e": "共同犯罪人按地位和作用分为主犯、从犯、胁从犯和教唆犯。"}, {"id": "c8-m7", "c": "第八章 刑 法", "t": "multiple", "s": "下面关于主刑的说法，正确的有( )。", "o": ["主刑是对犯罪人适用的主要刑罚方法", "主刑既能独立适用，也能附加适用", "主刑包括有期徒刑、无期徒刑和死刑", "死刑是刑罚中最严厉的一种"], "a": [0, 3], "e": "主刑是对犯罪人适用的主要刑罚方法，死刑是刑罚中最严厉的一种；主刑只能独立适用，且还包括管制、拘役。"}, {"id": "c8-m8", "c": "第八章 刑 法", "t": "multiple", "s": "下列关于数罪并罚的说法，正确的有( )。", "o": ["管制最高不能超过三年", "拘役最高不能超过一年", "有期徒刑总和刑期不满三十五年的，最高不能超过二十年", "有期徒刑总和刑期在三十五年以上的，最高不能超过二十五年"], "a": [0, 1, 2, 3], "e": "数罪并罚时，管制最高不超过三年、拘役最高不超过一年，有期徒刑总和刑期不满三十五年的最高不超过二十年、三十五年以上的最高不超过二十五年。"}, {"id": "c8-m9", "c": "第八章 刑 法", "t": "multiple", "s": "刑事责任年龄划分为哪些阶段( )。", "o": ["完全负刑事责任年龄", "相对负刑事责任年龄", "完全不负刑事责任年龄", "相对不负刑事责任年龄"], "a": [0, 1, 2, 3], "e": "刑法按行为人辨认和控制自己行为的能力，将刑事责任年龄划分为完全负刑事责任年龄、相对负刑事责任年龄、完全不负刑事责任年龄等阶段。"}, {"id": "c8-m10", "c": "第八章 刑 法", "t": "multiple", "s": "单位犯罪主体是指实施了危害社会的犯罪行为，依法应当承担刑事责任的( )。", "o": ["公司、企业", "事业单位", "机关", "团体"], "a": [0, 1, 2, 3], "e": "单位犯罪主体是指实施了危害社会的犯罪行为、依法应当承担刑事责任的公司企业、事业单位、机关、团体。"}, {"id": "c8-j1", "c": "第八章 刑 法", "t": "judge", "s": "依照法律应当受刑罚处罚的，都是犯罪，但是情节显著轻微危害不大，不认为是 犯罪。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 依照法律应当受刑罚处罚的都是犯罪，但情节显著轻微危害不大的不认为是犯罪。"}, {"id": "c8-j2", "c": "第八章 刑 法", "t": "judge", "s": "不满十四周岁的人，不管实施何种危害社会的行为，都不负刑事责任。( )", "o": ["正确", "错误"], "a": 1, "e": "× 已满十二周岁不满十四周岁的人，犯故意杀人、故意伤害罪致人死亡等特定重罪且情节恶劣，经最高人民检察院核准追诉的，应当负刑事责任。"}, {"id": "c8-j3", "c": "第八章 刑 法", "t": "judge", "s": "因不满十六周岁不予刑事处罚的，责令其父母或者其他监护人加以管教，在必要的 时候，依法进行专门矫治教育。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 因不满十六周岁不予刑事处罚的，责令其父母或其他监护人加以管教，必要时依法进行专门矫治教育。"}, {"id": "c8-j4", "c": "第八章 刑 法", "t": "judge", "s": "间歇性的精神病人在精神正常的时候犯罪，应当负刑事责任。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 间歇性的精神病人在精神正常的时候犯罪，应当负刑事责任。"}, {"id": "c8-j5", "c": "第八章 刑 法", "t": "judge", "s": "意外事件是指行为在客观上虽然造成了损害结果，但不是出于行为人的故意或者过 失，而是由于不可抗拒的原因所引起的。( )", "o": ["正确", "错误"], "a": 1, "e": "× 意外事件是由于不能抗拒或者不能预见的原因引起的，本题只说了“不可抗拒”，表述不完整。"}, {"id": "c8-j6", "c": "第八章 刑 法", "t": "judge", "s": "剥夺政治权利包括剥夺受教育权。( )", "o": ["正确", "错误"], "a": 1, "e": "× 剥夺政治权利不包括剥夺受教育权。"}, {"id": "c8-j7", "c": "第八章 刑 法", "t": "judge", "s": "对于犯罪的外国人，可以独立适用或者附加适用驱逐出境。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 对于犯罪的外国人，可以独立适用或者附加适用驱逐出境。"}, {"id": "c8-j8", "c": "第八章 刑 法", "t": "judge", "s": "假释是指被判处有期徒刑或者无期徒刑的犯罪人，在执行一定刑期之后，确有悔改 表现，不致再危害社会而附有条件地将其提前释放的一种刑罚制度。( )", "o": ["正确", "错误"], "a": 0, "e": "√ 假释是对判处有期徒刑或无期徒刑的犯罪人，在执行一定刑期后附条件提前释放的刑罚执行制度。"}, {"id": "c8-j9", "c": "第八章 刑 法", "t": "judge", "s": "在人民检察院、公安机关、国家安全机关立案侦查或者在人民法院受理案件以后， 逃避侦查或者审判的，应受追诉期限的限制。( )", "o": ["正确", "错误"], "a": 1, "e": "× 立案侦查或受理案件后逃避侦查或审判的，不受追诉期限的限制。"}, {"id": "c8-j10", "c": "第八章 刑 法", "t": "judge", "s": "我国刑法对追诉时效和行刑时效都做了规定。( )", "o": ["正确", "错误"], "a": 1, "e": "× 我国刑法只规定了追诉时效，没有规定行刑时效。"}, {"id": "szj1", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年7月2日，2025全球数字经济大会在北京开幕，主题为“建设数字友好城市”。", "o": ["正确", "错误"], "a": 0, "e": "正确。大会在北京开幕，主题为“建设数字友好城市”，并成立“全球数字经济城市联盟”。"}, {"id": "szj2", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年7月7日，全国多地举办纪念全民族抗战爆发90周年系列活动。", "o": ["正确", "错误"], "a": 1, "e": "错误。是纪念全民族抗战爆发88周年，不是90周年。"}, {"id": "szj3", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年7月9日，中国科学院联合多家科研机构发布嫦娥六号月球样品最新研究成果，首次系统揭示月球背面地质演化历程。", "o": ["正确", "错误"], "a": 0, "e": "正确。该成果首次系统揭示月球背面地质演化历程，填补国际相关领域空白。"}, {"id": "szj4", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "第十次全国对口支援新疆工作会议在新疆乌鲁木齐召开。", "o": ["正确", "错误"], "a": 1, "e": "错误。会议在新疆和田召开，不是乌鲁木齐。"}, {"id": "szj5", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年7月11日，第47届世界遗产大会将中国“西夏陵”列入《世界遗产名录》，至此我国世界遗产总数达到60项。", "o": ["正确", "错误"], "a": 0, "e": "正确。“西夏陵”列入《世界遗产名录》，我国世界遗产总数达到60项。"}, {"id": "szj6", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年9月3日是中国人民抗日战争暨世界反法西斯战争胜利70周年纪念日。", "o": ["正确", "错误"], "a": 1, "e": "错误。2025年9月3日是胜利80周年纪念日，中国人民历经14年浴血奋战。"}, {"id": "szj7", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年9月12日，十四届全国人大常委会第十七次会议表决通过《中华人民共和国法治宣传教育法》，自2025年11月1日起施行。", "o": ["正确", "错误"], "a": 0, "e": "正确。该法自2025年11月1日起施行。"}, {"id": "szj8", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年9月，中共中央印发了《中国共产党宣传工作条例》。", "o": ["正确", "错误"], "a": 1, "e": "错误。印发的是《中国共产党思想政治工作条例》。"}, {"id": "szj9", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年9月17日，全球公共安全合作论坛（连云港）2025年大会在江苏连云港举行。", "o": ["正确", "错误"], "a": 0, "e": "正确。大会主题为“共塑全球公共安全：团结行动，应对多元威胁”。"}, {"id": "szj10", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年10月20日，国际调解院开业仪式在中国香港举行。", "o": ["正确", "错误"], "a": 0, "e": "正确。国际调解院是中国牵头推动的政府间国际组织，旨在以非对抗方式化解国际争端。"}, {"id": "szj11", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年10月24日，十四届全国人大常委会第十八次会议决定以法律形式将10月25日设立为台湾光复纪念日。", "o": ["正确", "错误"], "a": 0, "e": "正确。会议作出决定，以法律形式将10月25日设立为台湾光复纪念日。"}, {"id": "szj12", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "十四届全国人大常委会第十八次会议通过的关于修改《网络安全法》的决定，自2025年12月1日起施行。", "o": ["正确", "错误"], "a": 1, "e": "错误。该决定自2026年1月1日起施行。"}, {"id": "szj13", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年11月5日，我国第三艘航空母舰福建舰在海南三亚某军港正式入列授旗，舷号为“18”。", "o": ["正确", "错误"], "a": 0, "e": "正确。福建舰是我国完全自主设计建造的首艘电磁弹射型航母，标志海军迈入“三航母时代”。"}, {"id": "szj14", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "中华人民共和国第十五届运动会由广东省单独承办。", "o": ["正确", "错误"], "a": 1, "e": "错误。本届全运会由粤港澳三地首次联合承办。"}, {"id": "szj15", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年11月10日至22日，《联合国气候变化框架公约》第三十次缔约方大会（COP30）在巴西贝伦举行。", "o": ["正确", "错误"], "a": 0, "e": "正确。大会达成“贝伦一揽子政治成果”。"}, {"id": "szj16", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "《习近平法治文选》第一卷共收入习近平同志关于法治建设的著作100篇。", "o": ["正确", "错误"], "a": 1, "e": "错误。共收入报告、讲话、演讲、指示、批示等69篇。"}, {"id": "szj17", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年11月17日至18日，中央全面依法治国工作会议在北京召开。", "o": ["正确", "错误"], "a": 0, "e": "正确。习近平总书记对全面依法治国工作作出重要指示。"}, {"id": "szj18", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年12月4日是第十个国家宪法日。", "o": ["正确", "错误"], "a": 1, "e": "错误。2025年12月4日是第十二个国家宪法日。"}, {"id": "szj19", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年12月8日，中共中央政治局召开会议，审议《中国共产党领导全面依法治国工作条例》。", "o": ["正确", "错误"], "a": 0, "e": "正确。该条例对提升党领导全面依法治国的科学化、制度化、规范化水平具有重要意义。"}, {"id": "szj20", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年12月，最高人民检察院与司法部联合印发《依法保障律师阅卷权利工作规定》。", "o": ["正确", "错误"], "a": 0, "e": "正确。文件推动构建现场阅卷、异地阅卷、线上阅卷“三位一体”的保障机制。"}, {"id": "szj21", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "流花油田是我国首个深水油田，其首次开发项目于2025年12月全面投产。", "o": ["正确", "错误"], "a": 1, "e": "错误。全面投产的是流花油田二次开发项目，不是首次开发。"}, {"id": "szj22", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年12月15日，我国自主研发的彩虹-7高空高速长航时隐身无人机成功完成首飞。", "o": ["正确", "错误"], "a": 0, "e": "正确。该机型首飞实现我国大型隐身航空装备技术新突破。"}, {"id": "szj23", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2025年12月18日，海南自由贸易港正式启动全岛封关运作。", "o": ["正确", "错误"], "a": 0, "e": "正确。全面推行“‘一线’放开、‘二线’管住、岛内自由”的政策制度。"}, {"id": "szj24", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "西安至延安高速铁路开通运营后，全国高速铁路运营里程突破6万公里。", "o": ["正确", "错误"], "a": 1, "e": "错误。是突破5万公里。"}, {"id": "szj25", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年1月1日，新修订的《中华人民共和国治安管理处罚法》正式施行，首次在法律中将学生欺凌纳入治安管理规制范畴。", "o": ["正确", "错误"], "a": 0, "e": "正确。新法第六十条首次将学生欺凌纳入治安管理规制范畴。"}, {"id": "szj26", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年1月12日至14日，中国共产党第二十届中央纪律检查委员会第五次全体会议在北京召开。", "o": ["正确", "错误"], "a": 0, "e": "正确。全会部署2026年全面从严治党、党风廉政建设和反腐败重点任务。"}, {"id": "szj27", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年2月1日，《全民阅读促进条例》正式施行，条例明确设立“全民阅读活动周”。", "o": ["正确", "错误"], "a": 0, "e": "正确。该条例以法治手段护航全民阅读开展。"}, {"id": "szj28", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年2月3日发布的中央一号文件，是党的十八大以来第14个指导“三农”工作的中央一号文件。", "o": ["正确", "错误"], "a": 0, "e": "正确。文件围绕粮食安全、乡村产业、乡村治理等作出全面部署。"}, {"id": "szj29", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年2月5日，中国与越南共同宣布2026年为“中越友好年”。", "o": ["正确", "错误"], "a": 1, "e": "错误。是中国与老挝共同宣布2026年为“中老友好年”。"}, {"id": "szj30", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年全国两会在上海召开。", "o": ["正确", "错误"], "a": 1, "e": "错误。2026年全国两会在北京召开。"}, {"id": "szj31", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年3月12日，十四届全国人大四次会议表决通过《中华人民共和国生态环境法典》，这是继民法典之后我国第二部以“法典”命名的法律。", "o": ["正确", "错误"], "a": 0, "e": "正确。该法典自2026年8月15日起施行。"}, {"id": "szj32", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年3月12日，十四届全国人大四次会议表决通过《中华人民共和国民族团结进步促进法》。", "o": ["正确", "错误"], "a": 0, "e": "正确。该法自2026年7月1日起施行，是新时代第一部民族领域的专门法律。"}, {"id": "szj33", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "《中华人民共和国国家发展规划法》自2026年10月1日起施行。", "o": ["正确", "错误"], "a": 1, "e": "错误。该法自公布之日起施行。"}, {"id": "szj34", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "新修订的《中华人民共和国监狱法》自2026年12月1日起施行。", "o": ["正确", "错误"], "a": 1, "e": "错误。新修订的监狱法自2026年11月1日起施行。"}, {"id": "szj35", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年4月30日通过的《中华人民共和国社会救助法》自2026年7月1日起施行。", "o": ["正确", "错误"], "a": 0, "e": "正确。社会救助法是社会保障领域的基础性法律。"}, {"id": "szj36", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "神舟二十一号航天员乘组搭乘神舟二十一号载人飞船在东风着陆场成功着陆。", "o": ["正确", "错误"], "a": 1, "e": "错误。航天员是搭乘神舟二十二号载人飞船返回的。"}, {"id": "szj37", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年5月30日是第十个全国科技工作者日，年度活动主题为“奋进‘十五五’科技谱新篇”。", "o": ["正确", "错误"], "a": 0, "e": "正确。各地开展致敬与科普活动，大力弘扬科学家精神。"}, {"id": "szj38", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年6月5日国务院常务会议审议通过《实施就业优先战略“十五五”规划》。", "o": ["正确", "错误"], "a": 0, "e": "正确。会议强调就业是民生之本，努力实现高质量充分就业。"}, {"id": "szj39", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "第48届世界技能大赛将于2026年9月在上海举办。", "o": ["正确", "错误"], "a": 0, "e": "正确。该赛事是全球规模最大的职业技能盛会，有助于弘扬工匠精神。"}, {"id": "szj40", "c": "时事政治（2025.6—2026.6）", "t": "judge", "s": "2026年6月15日至19日，缅甸总统应邀对中国进行国事访问。", "o": ["正确", "错误"], "a": 0, "e": "正确。双方达成多项合作共识，持续巩固中缅胞波情谊。"}];
+const CHAPTERS = [{"full": "第一章 坚定理想信念，为实现中华民族伟大复兴的中国梦而奋斗", "label": "第一章 坚定理想信念，为"}, {"full": "第二章 树立正确的人生观，实现新时代人生价值", "label": "第二章 树立正确的人生观"}, {"full": "第三章 加强社会主义道德建设，培育和践行社会主义核心价值观", "label": "第三章 加强社会主义道德"}, {"full": "第四章 遵守社会道德规范，注重个人品德修养", "label": "第四章 遵守社会道德规范"}, {"full": "第五章 法学基础理论", "label": "第五章 法学基础理论"}, {"full": "第六章 宪 法", "label": "第六章 宪法"}, {"full": "第七章 民 法", "label": "第七章 民法"}, {"full": "第八章 刑 法", "label": "第八章 刑法"}, {"full": "时事政治（2025.6—2026.6）", "label": "时事政治"}];
+const CARDS = [{"id": "sz1", "date": "2025.7.2", "title": "2025全球数字经济大会", "body": "在北京开幕，主题为“建设数字友好城市”；会上成立“全球数字经济城市联盟”，标志数字经济合作从双边互动迈向多边协同。"}, {"id": "sz2", "date": "2025.7.7", "title": "纪念全民族抗战爆发88周年", "body": "全国多地举办系列活动，通过拉响防空警报、敬献花篮、主题展览等形式缅怀革命先烈，弘扬伟大抗战精神。"}, {"id": "sz3", "date": "2025.7.9", "title": "嫦娥六号月球样品研究成果", "body": "中国科学院联合多家科研机构发布，首次系统揭示月球背面地质演化历程，填补国际相关领域空白。"}, {"id": "sz4", "date": "2025.7", "title": "第十次全国对口支援新疆工作会议", "body": "在新疆和田召开，聚焦产业发展、民生改善、人才培育与民族团结。"}, {"id": "sz5", "date": "2025.7.11", "title": "“西夏陵”列入《世界遗产名录》", "body": "联合国教科文组织第47届世界遗产大会通过，至此我国世界遗产总数达到60项。"}, {"id": "sz6", "date": "2025.9.3", "title": "抗战胜利80周年纪念日", "body": "中国人民抗日战争暨世界反法西斯战争胜利80周年，主题为“铭记历史、缅怀先烈、珍爱和平、开创未来”；中国人民历经14年浴血奋战。"}, {"id": "sz7", "date": "2025.9.12", "title": "《法治宣传教育法》通过", "body": "十四届全国人大常委会第十七次会议表决通过，自2025年11月1日起施行。"}, {"id": "sz8", "date": "2025.9", "title": "《中国共产党思想政治工作条例》印发", "body": "以习近平新时代中国特色社会主义思想为指导，以党章为根本依据，明确思想政治工作的体制机制、工作职责、内容方式、目标任务。"}, {"id": "sz9", "date": "2025.9.17", "title": "全球公共安全合作论坛（连云港）", "body": "2025年大会在江苏连云港举行，主题为“共塑全球公共安全：团结行动，应对多元威胁”。"}, {"id": "sz10", "date": "2025.10.20", "title": "国际调解院开业", "body": "开业仪式在中国香港举行，是中国牵头推动的政府间国际组织，以非对抗方式化解国际争端。"}, {"id": "sz11", "date": "2025.10.24", "title": "设立台湾光复纪念日", "body": "十四届全国人大常委会第十八次会议决定，以法律形式将10月25日设立为台湾光复纪念日。"}, {"id": "sz12", "date": "2025.10.28", "title": "修改《网络安全法》的决定通过", "body": "自2026年1月1日起施行；增加网络安全工作根本遵循、促进人工智能安全发展等规定。"}, {"id": "sz13", "date": "2025.11.5", "title": "福建舰入列", "body": "我国第三艘航空母舰在海南三亚某军港入列授旗，舷号“18”，是我国完全自主设计建造的首艘电磁弹射型航母，标志海军迈入“三航母时代”。"}, {"id": "sz14", "date": "2025.11.9", "title": "第十五届全国运动会开幕", "body": "在广州开幕，粤港澳三地首次联合承办全国综合性运动会；开幕式在广州、闭幕式在深圳，部分项目在香港、澳门举办。"}, {"id": "sz15", "date": "2025.11.10-22", "title": "COP30气候大会", "body": "《联合国气候变化框架公约》第三十次缔约方大会在巴西贝伦举行，达成“贝伦一揽子政治成果”。"}, {"id": "sz16", "date": "2025.11", "title": "《习近平法治文选》第一卷出版", "body": "由中央文献出版社出版，收入2012年12月至2025年2月期间关于法治建设最重要、最基本的著作共69篇。"}, {"id": "sz17", "date": "2025.11.17-18", "title": "中央全面依法治国工作会议", "body": "在京召开，习近平总书记对全面依法治国工作作出重要指示。"}, {"id": "sz18", "date": "2025.12.4", "title": "第十二个国家宪法日", "body": "12月1日至7日为第八个“宪法宣传周”，主题是“学习宣传贯彻习近平法治思想，推动宪法深入人心”。"}, {"id": "sz19", "date": "2025.12.8", "title": "审议《中国共产党领导全面依法治国工作条例》", "body": "中共中央政治局召开会议审议，旨在提升党领导全面依法治国的科学化、制度化、规范化水平。"}, {"id": "sz20", "date": "2025.12", "title": "《依法保障律师阅卷权利工作规定》印发", "body": "最高人民检察院与司法部联合印发，推动构建现场阅卷、异地阅卷、线上阅卷“三位一体”保障机制。"}, {"id": "sz21", "date": "2025.12", "title": "流花油田二次开发项目投产", "body": "我国首个深水油田，攻克多项深水油气开发世界级技术难题，为保障国家能源安全提供支撑。"}, {"id": "sz22", "date": "2025.12.15", "title": "彩虹-7无人机首飞成功", "body": "我国自主研发的高空高速长航时隐身无人机，实现大型隐身航空装备技术新突破。"}, {"id": "sz23", "date": "2025.12.18", "title": "海南自由贸易港全岛封关运作", "body": "以“‘一线’放开、‘二线’管住、岛内自由”为基本特征，是我国高水平对外开放的标志性工程。"}, {"id": "sz24", "date": "2025.12.26", "title": "西安至延安高铁开通", "body": "全国高速铁路运营里程突破5万公里，打通陕北交通要道。"}, {"id": "sz25", "date": "2026.1.1", "title": "新修订《治安管理处罚法》施行", "body": "新法第六十条首次在法律中将学生欺凌纳入治安管理规制范畴，压实学校报告处置责任。"}, {"id": "sz26", "date": "2026.1.12-14", "title": "二十届中央纪委五次全会", "body": "在北京召开，部署2026年全面从严治党、党风廉政建设和反腐败重点任务。"}, {"id": "sz27", "date": "2026.2.1", "title": "《全民阅读促进条例》施行", "body": "明确设立“全民阅读活动周”，细化各方阅读推广责任。"}, {"id": "sz28", "date": "2026.2.3", "title": "2026年中央一号文件发布", "body": "是党的十八大以来第14个指导“三农”工作的中央一号文件，围绕粮食安全、乡村产业、乡村治理作出部署。"}, {"id": "sz29", "date": "2026.2.5", "title": "“中老友好年”", "body": "中国与老挝共同宣布2026年为“中老友好年”，深化中老命运共同体建设。"}, {"id": "sz30", "date": "2026.3", "title": "全国两会召开", "body": "在北京召开，审议政府工作报告等，明确“十五五”开局之年发展目标，坚持“稳中求进”工作总基调。"}, {"id": "sz31", "date": "2026.3.12", "title": "《生态环境法典》通过", "body": "十四届全国人大四次会议表决通过，自2026年8月15日起施行，是继民法典之后我国第二部以“法典”命名的法律。"}, {"id": "sz32", "date": "2026.3.12", "title": "《民族团结进步促进法》通过", "body": "自2026年7月1日起施行，是新时代第一部民族领域的专门法律。"}, {"id": "sz33", "date": "2026.3.12", "title": "《国家发展规划法》通过", "body": "自公布之日起施行，是践行全过程人民民主、发挥国家发展规划战略导向作用的重要举措。"}, {"id": "sz34", "date": "2026.4.30", "title": "新修订《监狱法》通过", "body": "自2026年11月1日起施行，是现行监狱法施行30多年来的首次全面修订。"}, {"id": "sz35", "date": "2026.4.30", "title": "《社会救助法》通过", "body": "自2026年7月1日起施行，是社会保障领域的基础性法律。"}, {"id": "sz36", "date": "2026.5", "title": "神舟二十一号乘组返回", "body": "航天员搭乘神舟二十二号载人飞船在东风着陆场成功着陆，标志中国空间站进入常态化运营阶段。"}, {"id": "sz37", "date": "2026.5.30", "title": "第十个全国科技工作者日", "body": "年度活动主题为“奋进‘十五五’科技谱新篇”，大力弘扬科学家精神。"}, {"id": "sz38", "date": "2026.6.5", "title": "国务院常务会议", "body": "审议通过《实施就业优先战略“十五五”规划》，强调就业是民生之本，努力实现高质量充分就业。"}, {"id": "sz39", "date": "2026.6", "title": "第48届世界技能大赛", "body": "官方确认将于2026年9月在上海举办，是全球规模最大的职业技能盛会。"}, {"id": "sz40", "date": "2026.6.15-19", "title": "缅甸总统访华", "body": "两国领导人深入会谈并达成多项合作共识，推进中缅命运共同体建设。"}];
+/* ================= 基础 ================= */
+const LET = "ABCDEFGHIJ";
+const KEY = "sixiu.bank.v2";
+const OLDKEY = "sixiu.quizbank.v1";
+const SYNC_API = "https://extendsclass.com/api/json-storage/bin";
+const $ = (s, r=document) => r.querySelector(s);
+const el = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
+const esc = s => String(s).replace(/[&<>"]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const CH_LABEL = {};
+CHAPTERS.forEach(c => CH_LABEL[c.full] = c.label);
+const shortCh = c => CH_LABEL[c] || c;
+
+let S, order = [], draft = [], peek = false, tick = null, flash = { idx: 0, flip: false };
+let syncMsg = "";
+
+const DEF = () => ({
+  records:{}, fav:[], pos:0, view:"quiz", prev:null,
+  shuffle:false, chapter:"all", scope:"all",
+  exam:null, history:[], syncId:"", cards:{seen:0}
+});
+function load(){
+  let s = DEF();
+  try { const raw = localStorage.getItem(KEY); if (raw) s = Object.assign(s, JSON.parse(raw)); }
+  catch(e){}
+  if (!s.records || !Object.keys(s.records).length){
+    try { const old = JSON.parse(localStorage.getItem(OLDKEY) || "null");
+      if (old && old.records) { s.records = old.records; s.fav = old.fav || []; }
+    } catch(e){}
+  }
+  return s;
+}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} };
+const qById = id => QUESTIONS.find(q => q.id === id);
+const rec = id => S.records[id];
+const typeName = t => ({single:"单选题",multiple:"多选题",judge:"判断题"}[t] || t);
+const wrongIds = () => QUESTIONS.filter(q => { const r = S.records[q.id]; return r && r.ok === false; }).map(q => q.id);
+const doneIds  = () => QUESTIONS.filter(q => S.records[q.id]).map(q => q.id);
+const rightCnt = () => QUESTIONS.filter(q => (S.records[q.id] || {}).ok).length;
+const fmtTime = s => { s = Math.max(0, Math.round(s)); const m = Math.floor(s/60); return (m<10?"0":"")+m+":"+((s%60)<10?"0":"")+(s%60); };
+const ansText = q => q.t === "multiple" ? q.a.map(k => LET[k]).join("") : LET[q.a];
+const pickText = (q, p) => q.t === "multiple"
+  ? (Array.isArray(p) && p.length ? p.slice().sort((a,b)=>a-b).map(k=>LET[k]).join("") : "（未作答）")
+  : (p == null ? "（未作答）" : LET[p]);
+const sameAnswer = (q, p) => q.t === "multiple"
+  ? (Array.isArray(p) && p.length === q.a.length && [...p].sort().every((v,i)=>v===[...q.a].sort()[i]))
+  : p === q.a;
+
+function buildOrder(keepPos){
+  let idx = QUESTIONS.map((_, i) => i);
+  if (S.chapter !== "all") idx = idx.filter(i => QUESTIONS[i].c === S.chapter);
+  if (S.scope === "undone") idx = idx.filter(i => !S.records[QUESTIONS[i].id]);
+  else if (S.scope === "wrong") idx = idx.filter(i => wrongIds().includes(QUESTIONS[i].id));
+  else if (S.scope === "fav") idx = idx.filter(i => S.fav.includes(QUESTIONS[i].id));
+  if (S.shuffle) for (let i = idx.length-1; i > 0; i--){ const j = Math.random()*(i+1)|0; [idx[i],idx[j]]=[idx[j],idx[i]]; }
+  order = idx;
+  if (!keepPos || S.pos >= order.length) S.pos = 0;
+}
+function go(view, push){
+  if (push && !["wrong","fav","review"].includes(S.view)) S.prev = S.view;
+  S.view = view; peek = false; draft = []; save(); render();
+}
+function back(){ S.view = S.prev || "quiz"; S.prev = null; save(); render(); }
+
+/* ================= 答题（练习） ================= */
+function renderQuiz(){
+  const m = $("#main"); m.innerHTML = "";
+  if (!order.length){
+    m.appendChild(el("div","empty", S.scope === "wrong" ? "🎉 错题本是空的<br>继续保持"
+      : S.scope === "fav" ? "还没有收藏题目<br>答题时点右上角 ★ 收藏"
+      : "这个范围内没有题目<br>换个筛选条件试试"));
+    return;
+  }
+  const i = order[S.pos], q = QUESTIONS[i], r = rec(q.id), locked = !!r;
+  const card = el("div","card");
+  card.appendChild(el("div","meta",
+    `<span class="tag">${typeName(q.t)}</span><span class="tag g">${esc(shortCh(q.c))}</span><span class="tag g">${S.pos+1} / ${order.length}</span>`));
+  card.appendChild(el("p","stem", esc(q.s)));
+
+  const box = el("div","opts");
+  const isMulti = q.t === "multiple";
+  const picked = locked ? r.picked : (isMulti ? draft : null);
+  q.o.forEach((txt,k)=>{
+    const b = el("button","opt"); b.type = "button";
+    b.innerHTML = `<span class="key">${LET[k]}</span><span class="txt">${esc(txt)}</span>`;
+    const sel = isMulti ? (picked||[]).includes(k) : picked === k;
+    const right = isMulti ? q.a.includes(k) : q.a === k;
+    if (sel) b.classList.add("sel");
+    if (locked || peek){
+      b.disabled = true;
+      if (right) b.classList.add("ok"); else if (sel) b.classList.add("bad");
+    } else b.onclick = () => { if (isMulti) toggleMulti(k); else { commit(q.id, sameAnswer(q,k), k); render(); } };
+    box.appendChild(b);
+  });
+  card.appendChild(box);
+  if (isMulti && !locked && !peek){
+    card.appendChild(btns([["确认答案","primary",()=>{
+      if (!draft.length) return toast("请先选择至少一项");
+      commit(q.id, sameAnswer(q, draft), draft.slice()); render();
+    }]]));
+  }
+
+  if (locked){
+    const fb = el("div","fb " + (r.ok ? "right" : "wrong"));
+    fb.appendChild(el("div","res", r.ok ? "✅ 回答正确" : "❌ 回答错误"));
+    fb.appendChild(el("div","ans",
+      `你的答案：<b>${esc(pickText(q, r.picked))}</b>　正确答案：<b>${esc(ansText(q))}</b>` +
+      (isMulti ? `<br><span style="color:var(--muted);font-size:14px">（${esc(q.a.map(k=>q.o[k]).join(" / "))}）</span>` : "")));
+    if (q.e) fb.appendChild(el("div","exp", `<span class="lab">解析</span>${esc(q.e)}`));
+    card.appendChild(fb);
+  } else if (peek){
+    const fb = el("div","fb peek");
+    fb.appendChild(el("div","res","正确答案"));
+    fb.appendChild(el("div","ans", `<b>${esc(ansText(q))}</b>${isMulti ? `（${esc(q.a.map(k=>q.o[k]).join(" / "))}）` : ""}`));
+    if (q.e) fb.appendChild(el("div","exp", `<span class="lab">解析</span>${esc(q.e)}`));
+    card.appendChild(fb);
+  }
+
+  const row = el("div","row");
+  row.appendChild(btn("上一题","sm",prev,S.pos===0));
+  row.appendChild(el("div","spacer"));
+  if (locked) row.appendChild(btn("重做本题","sm ghost",()=>{ delete S.records[q.id]; draft = []; save(); render(); }));
+  else row.appendChild(btn(peek?"收起答案":"看答案","sm ghost",()=>{ peek = !peek; draft = []; render(); }));
+  row.appendChild(btn(S.pos === order.length-1 ? "回到第一题" : "下一题","sm primary",next));
+  card.appendChild(row);
+  card.appendChild(el("div","hint","键盘：1-4 选选项　← → 翻页"));
+  m.appendChild(card);
+}
+function toggleMulti(k){
+  const p = draft.indexOf(k);
+  p >= 0 ? draft.splice(p,1) : draft.push(k);
+  render();
+}
+function commit(id, ok, picked){
+  S.records[id] = {ok, picked, ts:Date.now()};
+  draft = []; peek = false; save();
+}
+function next(){ if (!order.length) return; S.pos = (S.pos+1)%order.length; draft = []; peek = false; save(); render(); }
+function prev(){ if (!order.length) return; S.pos = (S.pos-1+order.length)%order.length; draft = []; peek = false; save(); render(); }
+
+/* ================= 模拟考试 ================= */
+let examPick = { scope:"all", chapter:"all", count:20, limit:20 };
+function renderExam(){
+  const m = $("#main"); m.innerHTML = "";
+  if (!S.exam) return renderExamSetup(m);
+  if (!S.exam.submitted) return renderExamRun(m);
+  renderExamResult(m);
+}
+function renderExamSetup(m){
+  const card = el("div","card");
+  card.appendChild(el("div","meta",`<span class="tag">模拟考试</span><span class="tag g">做完统一判分</span>`));
+  card.appendChild(el("p","stem","设置好范围就开始，考试过程中不显示对错。"));
+
+  const mk = (label, opts, cur, on) => {
+    const f = el("div","field");
+    f.appendChild(el("div","lab", label));
+    const wrap = el("div","chips");
+    opts.forEach(([v, t]) => {
+      const c = el("button","chip" + (String(cur) === String(v) ? " on" : ""), esc(t));
+      c.type = "button"; c.onclick = () => { on(v); render(); };
+      wrap.appendChild(c);
+    });
+    f.appendChild(wrap); return f;
+  };
+  const chOpts = [["all","全部章节"]].concat(CHAPTERS.map(c => [c.full, c.label]));
+  card.appendChild(mk("考试范围", chOpts, examPick.chapter, v => examPick.chapter = v));
+  card.appendChild(mk("题目来源", [["all","全部题目"],["undone","没做过的"],["wrong","我的错题"],["fav","我的收藏"]], examPick.scope, v => examPick.scope = v));
+  card.appendChild(mk("题量", [[10,"10 题"],[20,"20 题"],[30,"30 题"],[50,"50 题"],[999,"全部"]], examPick.count, v => examPick.count = v));
+  card.appendChild(mk("时长", [[10,"10 分钟"],[20,"20 分钟"],[30,"30 分钟"],[60,"60 分钟"],[0,"不限时"]], examPick.limit, v => examPick.limit = v));
+
+  let pool = QUESTIONS.slice();
+  if (examPick.chapter !== "all") pool = pool.filter(q => q.c === examPick.chapter);
+  if (examPick.scope === "undone") pool = pool.filter(q => !S.records[q.id]);
+  if (examPick.scope === "wrong") pool = pool.filter(q => wrongIds().includes(q.id));
+  if (examPick.scope === "fav") pool = pool.filter(q => S.fav.includes(q.id));
+  const n = Math.min(examPick.count, pool.length);
+  card.appendChild(el("div","hint",`本次可抽题 ${pool.length} 道，将出 ${n} 道${examPick.limit ? "，限时 " + examPick.limit + " 分钟" : ""}`));
+  card.appendChild(btns([["开始考试","primary wide",()=>startExam(pool,n)]]));
+  m.appendChild(card);
+
+  const f = el("label","switch");
+  f.innerHTML = `<input type="checkbox" ${S.shuffle?"checked":""}><span>考试题目随机打乱</span>`;
+  f.querySelector("input").onchange = e => { S.shuffle = e.target.checked; save(); };
+  m.appendChild(f);
+
+  if (S.history.length){
+    m.appendChild(el("h3","","考试记录"));
+    S.history.slice().reverse().slice(0,8).forEach(h=>{
+      m.appendChild(el("div","rowline",
+        `<span class="t">${h.total} 题 · 用时 ${fmtTime(h.spent)}<div style="font-size:12.5px;color:var(--muted)">${h.scope}</div></span>
+         <span class="v">${Math.round(h.right/h.total*100)} 分</span>`));
+    });
+  }
+}
+function startExam(pool, n){
+  if (!n) return toast("这个范围没有题目");
+  let list = pool.slice();
+  for (let i = list.length-1; i > 0; i--){ const j = Math.random()*(i+1)|0; [list[i],list[j]]=[list[j],list[i]]; }
+  list = list.slice(0, n);
+  S.exam = { ids:list.map(q=>q.id), ans:{}, start:Date.now(), limit:examPick.limit*60 || 0, submitted:false, pos:0, scope:
+    (examPick.chapter === "all" ? "全部章节" : shortCh(examPick.chapter)) + " · " + ({all:"全部题目",undone:"没做过的",wrong:"错题",fav:"收藏"}[examPick.scope]) };
+  save(); startTick(); render();
+}
+function renderExamRun(m){
+  const E = S.exam, id = E.ids[E.pos], q = qById(id);
+  const card = el("div","card");
+  card.appendChild(el("div","meta",
+    `<span class="tag">${typeName(q.t)}</span><span class="tag g">第 ${E.pos+1} / ${E.ids.length} 题</span><span class="tag g">${esc(shortCh(q.c))}</span>`));
+  card.appendChild(el("p","stem", esc(q.s)));
+
+  const box = el("div","opts");
+  const isMulti = q.t === "multiple";
+  const cur = E.ans[id];
+  q.o.forEach((txt,k)=>{
+    const b = el("button","opt"); b.type = "button";
+    b.innerHTML = `<span class="key">${LET[k]}</span><span class="txt">${esc(txt)}</span>`;
+    const sel = isMulti ? (cur||[]).includes(k) : cur === k;
+    if (sel) b.classList.add("pick");
+    b.onclick = () => {
+      if (isMulti){ const a = (E.ans[id]||[]).slice(); const p = a.indexOf(k); p>=0?a.splice(p,1):a.push(k); E.ans[id] = a; }
+      else E.ans[id] = (E.ans[id] === k ? null : k);
+      save(); render();
+    };
+    box.appendChild(b);
+  });
+  card.appendChild(box);
+
+  const row = el("div","row");
+  row.appendChild(btn("上一题","sm",()=>{ E.pos = Math.max(0,E.pos-1); save(); render(); }, E.pos===0));
+  row.appendChild(el("div","spacer"));
+  row.appendChild(btn("下一题","sm primary",()=>{ E.pos = Math.min(E.ids.length-1,E.pos+1); save(); render(); }, E.pos===E.ids.length-1));
+  card.appendChild(row);
+  m.appendChild(card);
+
+  const done = Object.keys(E.ans).filter(k => E.ans[k] != null && (!Array.isArray(E.ans[k]) || E.ans[k].length)).length;
+  const f = el("div","field");
+  f.appendChild(el("div","lab",`答题卡　已答 ${done} / ${E.ids.length}`));
+  const g = el("div","grid");
+  E.ids.forEach((qid,k)=>{
+    const a = E.ans[qid];
+    const has = a != null && (!Array.isArray(a) || a.length);
+    const b = el("button", (has?"done ":"") + (k===E.pos?"cur":""), String(k+1));
+    b.type = "button"; b.onclick = () => { E.pos = k; save(); render(); };
+    g.appendChild(b);
+  });
+  f.appendChild(g);
+  m.appendChild(f);
+
+  const sb = el("div","btns");
+  sb.appendChild(btn("交卷并查看成绩","primary wide",submitExam));
+  m.appendChild(sb);
+}
+function submitExam(){
+  const E = S.exam; if (!E || E.submitted) return;
+  const rest = E.ids.filter(qid => { const a = E.ans[qid]; return a == null || (Array.isArray(a) && !a.length); }).length;
+  if (rest && !confirm(`还有 ${rest} 道题没作答，确定交卷？`)) return;
+  let right = 0;
+  E.ids.forEach(qid=>{
+    const q = qById(qid), a = E.ans[qid];
+    const ok = a != null && sameAnswer(q, a);
+    if (ok) right++;
+    S.records[qid] = {ok, picked: (a == null ? "" : a), ts:Date.now()};
+  });
+  E.submitted = true; E.spent = Math.round((Date.now()-E.start)/1000);
+  S.history.push({ts:Date.now(), total:E.ids.length, right, spent:E.spent, scope:E.scope});
+  if (S.history.length > 50) S.history = S.history.slice(-50);
+  stopTick(); save(); render();
+}
+function examAnsOf(q){ const a = S.exam.ans[q.id]; return a == null ? (q.t === "multiple" ? [] : null) : a; }
+function renderExamResult(m){
+  const E = S.exam;
+  const right = E.ids.filter(qid => sameAnswer(qById(qid), examAnsOf(qById(qid)))).length;
+  const score = Math.round(right / E.ids.length * 100);
+  const card = el("div","card");
+  card.appendChild(el("div","big", `${score}<span style="font-size:20px;color:var(--muted)"> 分</span>`));
+  card.appendChild(el("div","bigS", `${esc(E.scope)}　共 ${E.ids.length} 题　用时 ${fmtTime(E.spent)}`));
+  const g = el("div","stats");
+  g.innerHTML = `<div class="stat"><div class="n">${right}</div><div class="l">答对</div></div>
+    <div class="stat"><div class="n">${E.ids.length-right}</div><div class="l">答错</div></div>
+    <div class="stat"><div class="n">${fmtTime(E.spent)}</div><div class="l">用时</div></div>`;
+  card.appendChild(g);
+  card.appendChild(el("div","hint","错题已自动加入错题本"));
+  card.appendChild(btns([["逐题查看解析","primary wide",()=>{ examReview = 0; go("review", true); }]]));
+  card.appendChild(btns([["再考一次","ghost",()=>{ S.exam = null; stopTick(); save(); render(); }],
+                         ["回到练习","ghost",()=>{ S.exam = null; stopTick(); go("quiz"); }]]));
+  m.appendChild(card);
+}
+let examReview = 0;
+function renderReview(){
+  const m = $("#main"); m.innerHTML = "";
+  const E = S.exam; if (!E) return go("exam");
+  const id = E.ids[examReview], q = qById(id), a = E.ans[id];
+  const ok = a != null && sameAnswer(q, a);
+  const card = el("div","card");
+  card.appendChild(el("div","meta",
+    `<span class="tag" style="${ok?"background:var(--ok-bg);color:var(--ok)":"background:var(--bad-bg);color:var(--bad)"}">${ok?"答对":"答错"}</span>
+     <span class="tag g">第 ${examReview+1} / ${E.ids.length} 题</span><span class="tag g">${esc(shortCh(q.c))}</span>`));
+  card.appendChild(el("p","stem", esc(q.s)));
+  const box = el("div","opts");
+  q.o.forEach((txt,k)=>{
+    const b = el("button","opt"); b.type = "button"; b.disabled = true;
+    b.innerHTML = `<span class="key">${LET[k]}</span><span class="txt">${esc(txt)}</span>`;
+    const right = q.t === "multiple" ? q.a.includes(k) : q.a === k;
+    const sel = q.t === "multiple" ? (Array.isArray(a)&&a.includes(k)) : a === k;
+    if (right) b.classList.add("ok"); else if (sel) b.classList.add("bad");
+    box.appendChild(b);
+  });
+  card.appendChild(box);
+  const fb = el("div","fb " + (ok?"right":"wrong"));
+  fb.appendChild(el("div","ans",`你的答案：<b>${esc(pickText(q, a))}</b>　正确答案：<b>${esc(ansText(q))}</b>`));
+  if (q.e) fb.appendChild(el("div","exp",`<span class="lab">解析</span>${esc(q.e)}`));
+  card.appendChild(fb);
+  const row = el("div","row");
+  row.appendChild(btn("上一题","sm",()=>{ examReview = Math.max(0,examReview-1); render(); }, examReview===0));
+  row.appendChild(el("div","spacer"));
+  row.appendChild(btn("下一题","sm primary",()=>{ examReview = Math.min(E.ids.length-1,examReview+1); render(); }, examReview===E.ids.length-1));
+  card.appendChild(row);
+  m.appendChild(card);
+}
+function startTick(){
+  stopTick();
+  tick = setInterval(()=>{
+    const E = S.exam; if (!E || E.submitted){ stopTick(); return; }
+    if (E.limit){
+      const left = E.limit - Math.round((Date.now()-E.start)/1000);
+      const t = $("#timer");
+      if (t){ t.textContent = "剩余 " + fmtTime(left); t.classList.toggle("warn", left <= 60); }
+      if (left <= 0){ toast("时间到，自动交卷"); submitExam(); }
+    } else {
+      const t = $("#timer");
+      if (t) t.textContent = "已用 " + fmtTime(Math.round((Date.now()-E.start)/1000));
+    }
+  }, 1000);
+}
+function stopTick(){ if (tick){ clearInterval(tick); tick = null; } }
+
+/* ================= 时事政治：记忆卡片 ================= */
+function renderCards(){
+  const m = $("#main"); m.innerHTML = "";
+  if (!CARDS.length){ m.appendChild(el("div","empty","没有卡片")); return; }
+  const c = CARDS[flash.idx];
+  const wrap = el("div","flash");
+  wrap.innerHTML = flash.flip
+    ? `<div class="d">${esc(c.date)}　${esc(c.title)}</div><div class="bd">${esc(c.body)}</div><div class="tap">轻点卡片翻回正面</div>`
+    : `<div class="d">${esc(c.date)}</div><div class="ti">${esc(c.title)}</div><div class="tap">轻点卡片看要点　·　${flash.idx+1} / ${CARDS.length}</div>`;
+  wrap.onclick = () => { flash.flip = !flash.flip; render(); };
+  m.appendChild(wrap);
+
+  const row = el("div","lrow");
+  row.appendChild(btn("上一张","sm",()=>{ flash.idx=(flash.idx-1+CARDS.length)%CARDS.length; flash.flip=false; render(); }));
+  row.appendChild(el("div","sp"));
+  row.appendChild(btn(flash.flip?"看正面":"看要点","sm ghost",()=>{ flash.flip=!flash.flip; render(); }));
+  row.appendChild(btn("下一张","sm primary",()=>{ flash.idx=(flash.idx+1)%CARDS.length; flash.flip=false; render(); }));
+  m.appendChild(row);
+
+  const szCh = (CHAPTERS.find(x => x.label.indexOf("时事") === 0) || {}).full;
+  if (szCh){
+    const b1 = el("div","btns");
+    b1.appendChild(btn("练这 40 道时政判断题","primary wide",()=>{
+      S.chapter = szCh; S.scope = "all"; S.view = "quiz"; S.pos = 0;
+      $("#chapterSel").value = szCh; $("#scopeSel").value = "all";
+      buildOrder(false); save(); render();
+    }));
+    m.appendChild(b1);
+    const b2 = el("div","btns");
+    b2.appendChild(btn("用时政题模拟考试","ghost wide",()=>{
+      examPick.chapter = szCh; S.exam = null; stopTick(); go("exam");
+    }));
+    m.appendChild(b2);
+  }
+
+  const f = el("div","field");
+  f.appendChild(el("div","lab","快速跳到第几张"));
+  const g = el("div","grid");
+  CARDS.forEach((_, k) => {
+    const b = el("button", k === flash.idx ? "cur" : "", String(k+1));
+    b.type = "button"; b.onclick = () => { flash.idx = k; flash.flip = false; render(); };
+    g.appendChild(b);
+  });
+  f.appendChild(g); m.appendChild(f);
+  m.appendChild(el("div","hint","卡片共 40 张，对应 2025 年 6 月 — 2026 年 6 月时事要点"));
+}
+
+/* ================= 错题 / 收藏 ================= */
+function renderList(kind){
+  const m = $("#main"); m.innerHTML = "";
+  const ids = kind === "wrong" ? wrongIds() : S.fav;
+  if (!ids.length){
+    m.appendChild(el("div","empty", kind === "wrong" ? "🎉 错题本是空的<br>继续保持" : "还没有收藏题目<br>答题时点右上角 ★ 收藏"));
+    return;
+  }
+  const b0 = el("div","btns");
+  b0.appendChild(btn(kind === "wrong" ? "逐题刷错题" : "只看收藏", "primary", ()=>{
+    S.scope = kind === "wrong" ? "wrong" : "fav"; S.chapter = "all";
+    $("#scopeSel").value = S.scope; $("#chapterSel").value = "all";
+    buildOrder(false); S.view = "quiz"; S.prev = null; save(); render();
+  }));
+  b0.appendChild(btn("清空","ghost",()=>{
+    if (!confirm("确定清空？")) return;
+    if (kind === "wrong") Object.keys(S.records).forEach(k => { if (!S.records[k].ok) delete S.records[k]; });
+    else S.fav = [];
+    buildOrder(true); save(); render();
+  }));
+  m.appendChild(b0);
+  m.appendChild(el("h3","", `共 ${ids.length} 道 · 点击查看`));
+  const list = el("div","list");
+  ids.forEach((id, n) => {
+    const q = qById(id); if (!q) return;
+    const it = el("div","item");
+    it.innerHTML = `<span class="no${kind === "fav" ? " g" : ""}">${n+1}</span><span class="q">${esc(q.s)}</span>`;
+    it.onclick = () => {
+      if (S.chapter !== "all" && q.c !== S.chapter) { S.chapter = "all"; $("#chapterSel").value = "all"; }
+      S.scope = kind === "wrong" ? "wrong" : "fav"; $("#scopeSel").value = S.scope;
+      buildOrder(false);
+      let p = order.indexOf(QUESTIONS.indexOf(q)); if (p < 0){ order.unshift(QUESTIONS.indexOf(q)); p = 0; }
+      S.pos = p; S.view = "quiz"; S.prev = null; save(); render();
+    };
+    list.appendChild(it);
+  });
+  m.appendChild(list);
+}
+
+/* ================= 我的 ================= */
+function renderData(){
+  const m = $("#main"); m.innerHTML = "";
+  const done = doneIds().length, right = rightCnt();
+  const w = wrongIds().length;
+  const g = el("div","stats");
+  g.innerHTML = `<div class="stat"><div class="n">${QUESTIONS.length}</div><div class="l">题目总数</div></div>
+    <div class="stat"><div class="n">${done}</div><div class="l">已作答</div></div>
+    <div class="stat"><div class="n">${done?Math.round(right/done*100):0}%</div><div class="l">正确率</div></div>
+    <div class="stat"><div class="n">${w}</div><div class="l">错题数</div></div>`;
+  m.appendChild(g);
+
+  m.appendChild(el("h3","","快速进入"));
+  const e1 = el("div","rowline",`<span class="t">错题本</span><span class="v">${w} 道</span><span class="chev">›</span>`);
+  e1.onclick = () => go("wrong", true); m.appendChild(e1);
+  const e2 = el("div","rowline",`<span class="t">收藏</span><span class="v">${S.fav.length} 道</span><span class="chev">›</span>`);
+  e2.onclick = () => go("fav", true); m.appendChild(e2);
+  const e3 = el("div","rowline",`<span class="t">考试记录</span><span class="v">${S.history.length} 次</span><span class="chev">›</span>`);
+  e3.onclick = () => { S.exam = null; stopTick(); go("exam"); };
+  m.appendChild(e3);
+
+  m.appendChild(el("h3","","各章进度"));
+  const t = el("table");
+  t.innerHTML = "<tr><th>章节</th><th class='n'>已做</th><th class='n'>正确率</th></tr>";
+  CHAPTERS.forEach(c=>{
+    const list = QUESTIONS.filter(q => q.c === c.full);
+    const d = list.filter(q => S.records[q.id]).length;
+    const rr = list.filter(q => (S.records[q.id]||{}).ok).length;
+    t.innerHTML += `<tr><td>${esc(c.label)}</td><td class="n">${d}/${list.length}</td><td class="n">${d?Math.round(rr/d*100)+"%":"—"}</td></tr>`;
+  });
+  m.appendChild(t);
+
+  const sw = el("label","switch");
+  sw.innerHTML = `<input type="checkbox" ${S.shuffle?"checked":""}><span>随机打乱题目顺序</span>`;
+  sw.querySelector("input").onchange = e => { S.shuffle = e.target.checked; buildOrder(false); save(); toast(S.shuffle?"已开启随机顺序":"已恢复原顺序"); render(); };
+  m.appendChild(sw);
+
+  /* ---- 云同步 ---- */
+  m.appendChild(el("h3","","云同步（换设备接着刷）"));
+  const f = el("div","field");
+  if (S.syncId){
+    f.innerHTML = `<div class="lab">同步码（在另一台设备输入它就能接上）</div>
+      <div style="font-size:21px;font-weight:800;letter-spacing:1.6px;margin:2px 0 6px">${esc(S.syncId)}</div>
+      <div style="font-size:12.5px;color:var(--muted)">进度保存在云端，任何设备凭这串码都能读写。</div>`;
+    const b = el("div","btns");
+    b.appendChild(btn("上传进度","primary sm",()=>syncPush()));
+    b.appendChild(btn("下载并合并","sm",()=>syncPull()));
+    b.appendChild(btn("解除绑定","ghost sm",()=>{ if(confirm("解除后本机不再同步，云端数据保留。")){ S.syncId=""; save(); render(); } }));
+    f.appendChild(b);
+  } else {
+    f.innerHTML = `<div class="lab">还没有开启同步</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7">点「生成同步码」会把这台设备的进度存到云端并得到一串码；在手机/平板上输入同一串码即可继续刷。</div>`;
+    const inp = el("input","fill"); inp.placeholder = "已有同步码？粘贴到这里"; inp.value = syncInput;
+    inp.oninput = e => syncInput = e.target.value;
+    inp.style.marginTop = "10px";
+    f.appendChild(inp);
+    const b = el("div","btns");
+    b.appendChild(btn("生成同步码","primary sm",()=>syncCreate()));
+    b.appendChild(btn("使用这个同步码","sm",()=>{ const v = (syncInput||"").trim(); if(!/^[A-Za-z0-9_-]{4,}$/.test(v)) return toast("同步码格式不对"); S.syncId = v; save(); toast("已绑定"); syncPull(); }));
+    f.appendChild(b);
+  }
+  if (syncMsg) f.appendChild(el("div","hint", esc(syncMsg)));
+  m.appendChild(f);
+
+  /* ---- 数据管理 ---- */
+  m.appendChild(el("h3","","数据管理"));
+  const r1 = el("div","btns");
+  r1.appendChild(btn("导出进度","sm",()=>{
+    const blob = new Blob([JSON.stringify({records:S.records, fav:S.fav, history:S.history, syncId:S.syncId}, null, 2)], {type:"application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "思修题库进度备份.json"; a.click();
+  }));
+  r1.appendChild(btn("导入进度","sm",()=>{
+    const inp = document.createElement("input"); inp.type = "file"; inp.accept = ".json,.txt";
+    inp.onchange = () => { const file = inp.files[0]; if (!file) return; const rd = new FileReader();
+      rd.onload = () => { try { const d = JSON.parse(rd.result);
+        S.records = Object.assign({}, d.records || {}); S.fav = d.fav || []; S.history = d.history || [];
+        if (d.syncId) S.syncId = d.syncId;
+        buildOrder(false); save(); toast("导入成功"); render();
+      } catch(e){ toast("文件格式不对"); } };
+      rd.readAsText(file); };
+    inp.click();
+  }));
+  r1.appendChild(btn("清空记录","sm danger",()=>{
+    if (!confirm("将清空所有作答记录、错题、收藏和考试记录，确定？")) return;
+    S.records = {}; S.fav = []; S.history = []; S.pos = 0; draft = []; peek = false; buildOrder(false); save(); render();
+  }));
+  m.appendChild(r1);
+  m.appendChild(el("div","hint","记录保存在本机浏览器；换设备请用「云同步」或导出/导入。"));
+}
+let syncInput = "";
+
+/* ---- 云同步实现 ---- */
+async function syncCreate(){
+  try {
+    syncMsg = "正在生成…"; render();
+    const r = await fetch(SYNC_API, {method:"POST", headers:{"Content-Type":"text/plain;charset=UTF-8"}, body:JSON.stringify({records:{}, fav:[]})});
+    const d = await r.json();
+    if (!d.id) throw new Error("no id");
+    S.syncId = d.id; save();
+    await syncPush(true);
+    syncMsg = "已生成同步码：" + d.id;
+  } catch(e){ syncMsg = "生成失败，请检查网络后重试"; }
+  render();
+}
+async function syncPush(silent){
+  if (!S.syncId) return;
+  try {
+    if (!silent){ syncMsg = "上传中…"; render(); }
+    await fetch(SYNC_API + "/" + encodeURIComponent(S.syncId), {
+      method:"PUT", headers:{"Content-Type":"text/plain;charset=UTF-8"},
+      body: JSON.stringify({records:S.records, fav:S.fav, updated:Date.now()})});
+    syncMsg = "已上传 " + new Date().toLocaleTimeString().slice(0,5);
+  } catch(e){ syncMsg = "上传失败（离线时不影响本机使用）"; }
+  if (!silent) render();
+}
+async function syncPull(){
+  if (!S.syncId) return;
+  try {
+    syncMsg = "下载中…"; render();
+    const r = await fetch(SYNC_API + "/" + encodeURIComponent(S.syncId));
+    const d = await r.json();
+    let n = 0;
+    Object.keys(d.records || {}).forEach(id => {
+      const a = d.records[id], b = S.records[id];
+      if (!b || (a.ts || 0) > (b.ts || 0)){ S.records[id] = a; n++; }
+    });
+    (d.fav || []).forEach(id => { if (!S.fav.includes(id)) S.fav.push(id); });
+    buildOrder(true); save();
+    syncMsg = "已合并 " + n + " 条记录";
+  } catch(e){ syncMsg = "下载失败，请确认同步码是否正确"; }
+  render();
+}
+
+/* ================= 路由与渲染 ================= */
+function render(){
+  const titles = {quiz:"思想道德修养与法律基础", exam:"模拟考试", cards:"时事政治", data:"我的", wrong:"错题本", fav:"收藏", review:"考试解析"};
+  const tabOf  = {quiz:"quiz", exam:"exam", review:"exam", cards:"cards", data:"data", wrong:"data", fav:"data"};
+  $("#title").textContent = titles[S.view] || "题库";
+  $("#backBtn").style.display = ["wrong","fav","review"].includes(S.view) ? "" : "none";
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.v === tabOf[S.view]));
+  $("#tabs").style.display = ["wrong","fav","review"].includes(S.view) ? "none" : "flex";
+  $("#filters").style.display = S.view === "quiz" ? "flex" : "none";
+
+  const i = order[S.pos], q = QUESTIONS[i];
+  $("#favBtn").style.display = (S.view === "quiz" && q) ? "" : "none";
+  $("#favBtn").classList.toggle("on", !!(q && S.fav.includes(q.id)));
+
+  if (S.view === "exam" && S.exam && !S.exam.submitted){
+    const E = S.exam, answered = E.ids.filter(id => { const a = E.ans[id]; return a != null && (!Array.isArray(a) || a.length); }).length;
+    $("#counter").textContent = answered + " / " + E.ids.length;
+    $("#pbar").style.width = (answered / E.ids.length * 100) + "%";
+    const left = E.limit ? E.limit - Math.round((Date.now()-E.start)/1000) : 0;
+    $("#sub").innerHTML = `<span class="timer${left && left<=60 ? " warn":""}" id="timer">${E.limit ? "剩余 "+fmtTime(left) : "已用 "+fmtTime((Date.now()-E.start)/1000)}</span><span>${esc(E.scope)}</span>`;
+    if (!tick) startTick();
+  } else {
+    stopTick();
+    $("#sub").innerHTML = "";
+    const done = doneIds().length;
+    $("#counter").textContent = done + " / " + QUESTIONS.length;
+    $("#pbar").style.width = (done / QUESTIONS.length * 100) + "%";
+  }
+
+  if (S.view === "quiz") renderQuiz();
+  else if (S.view === "exam") renderExam();
+  else if (S.view === "review") renderReview();
+  else if (S.view === "cards") renderCards();
+  else if (S.view === "wrong") renderList("wrong");
+  else if (S.view === "fav") renderList("fav");
+  else renderData();
+}
+function btn(txt, cls, fn, disabled){
+  const b = el("button","btn " + (cls||""), esc(txt)); b.type = "button";
+  if (disabled) b.disabled = true; else b.onclick = fn;
+  return b;
+}
+function btns(defs){ const d = el("div","btns"); defs.forEach(([t,c,f]) => d.appendChild(btn(t,c,f))); return d; }
+function toast(msg){
+  let t = $("#toast");
+  if (!t){ t = el("div"); t.id = "toast";
+    Object.assign(t.style, {position:"fixed",left:"50%",bottom:"36px",transform:"translateX(-50%)",
+      maxWidth:"86%",background:"rgba(0,0,0,.84)",color:"#fff",padding:"11px 20px",borderRadius:"12px",
+      fontSize:"14px",zIndex:"99",opacity:"0",transition:"opacity .2s",pointerEvents:"none",
+      WebkitBackdropFilter:"blur(10px)",backdropFilter:"blur(10px)"});
+    document.body.appendChild(t); }
+  t.textContent = msg; t.style.opacity = "1";
+  clearTimeout(t._h); t._h = setTimeout(() => t.style.opacity = "0", 1500);
+}
+
+/* ================= 启动 ================= */
+S = load();
+(function init(){
+  const cs = $("#chapterSel");
+  cs.innerHTML = '<option value="all">全部章节</option>' + CHAPTERS.map(c => `<option value="${esc(c.full)}">${esc(c.label)}</option>`).join("");
+  cs.value = CHAPTERS.some(c => c.full === S.chapter) ? S.chapter : "all";
+  if (cs.value !== S.chapter) S.chapter = "all";
+  $("#scopeSel").value = S.scope;
+})();
+$("#tabs").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.view = b.dataset.v; S.prev = null; peek = false; draft = []; save(); render(); };
+$("#backBtn").onclick = back;
+$("#chapterSel").onchange = e => { S.chapter = e.target.value; draft = []; peek = false; buildOrder(false); save(); render(); };
+$("#scopeSel").onchange = e => { S.scope = e.target.value; draft = []; peek = false; buildOrder(false); save(); render(); };
+$("#favBtn").onclick = () => {
+  const i = order[S.pos]; if (i == null) return;
+  const id = QUESTIONS[i].id;
+  S.fav = S.fav.includes(id) ? S.fav.filter(x => x !== id) : S.fav.concat(id);
+  save(); toast(S.fav.includes(id) ? "已收藏" : "已取消收藏"); render();
+};
+document.addEventListener("keydown", e => {
+  if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+  if (S.view === "quiz"){
+    if (e.key === "ArrowRight" || e.key === "j") next();
+    if (e.key === "ArrowLeft"  || e.key === "k") prev();
+    if (/^[1-9]$/.test(e.key)){
+      const i = order[S.pos], q = QUESTIONS[i];
+      if (!q || rec(q.id) || peek) return;
+      const k = +e.key - 1; if (k >= q.o.length) return;
+      q.t === "multiple" ? toggleMulti(k) : (commit(q.id, sameAnswer(q,k), k), render());
+    }
+  } else if (S.view === "exam" && S.exam && !S.exam.submitted){
+    if (e.key === "ArrowRight"){ S.exam.pos = Math.min(S.exam.ids.length-1, S.exam.pos+1); save(); render(); }
+    if (e.key === "ArrowLeft"){ S.exam.pos = Math.max(0, S.exam.pos-1); save(); render(); }
+  } else if (S.view === "cards"){
+    if (e.key === "ArrowRight"){ flash.idx=(flash.idx+1)%CARDS.length; flash.flip=false; render(); }
+    if (e.key === "ArrowLeft"){ flash.idx=(flash.idx-1+CARDS.length)%CARDS.length; flash.flip=false; render(); }
+    if (e.key === " "){ flash.flip=!flash.flip; render(); }
+  }
+});
+buildOrder(true);
+render();
+
+</script>
+</body>
+</html>
